@@ -172,3 +172,4 @@ E:\DartsStats\DartsStats.AppHost\obj\Debug\net9.0\refint\DartsStats.AppHost.dll
 E:\DartsStats\DartsStats.AppHost\obj\Debug\net9.0\DartsStats.AppHost.pdb
 E:\DartsStats\DartsStats.AppHost\obj\Debug\net9.0\DartsStats.AppHost.genruntimeconfig.cache
 E:\DartsStats\DartsStats.AppHost\obj\Debug\net9.0\ref\DartsStats.AppHost.dll
+E:\DartsStats\DartsStats.AppHost\obj\Debug\net9.0\DartsStats.AppHost.sourcelink.json

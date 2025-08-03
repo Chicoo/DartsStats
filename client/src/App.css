@@ -400,6 +400,41 @@ td:first-child {
   color: white;
 }
 
+/* Player Name and Nickname Styling */
+.player-name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.player-nickname {
+  font-size: 0.85rem;
+  color: #667eea !important;
+  font-style: italic;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+/* Match card player info styling */
+.player-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.player-info .player-name {
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.25rem;
+}
+
+.player-info .player-nickname {
+  font-size: 0.8rem;
+  color: #667eea !important;
+  font-style: italic;
+  font-weight: 500;
+}
+
 .error {
   color: #e53e3e;
   background: white;

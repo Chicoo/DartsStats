@@ -22,7 +22,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DartsStats.AppHost")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd376ff99f30063af727cce86801cb4aaebeaa06")]
 [assembly: System.Reflection.AssemblyProductAttribute("DartsStats.AppHost")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DartsStats.AppHost")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

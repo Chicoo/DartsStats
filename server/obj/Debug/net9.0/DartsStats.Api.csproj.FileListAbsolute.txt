@@ -247,3 +247,4 @@ E:\DartsStats\server\obj\Debug\net9.0\refint\DartsStats.Api.dll
 E:\DartsStats\server\obj\Debug\net9.0\DartsStats.Api.pdb
 E:\DartsStats\server\obj\Debug\net9.0\DartsStats.Api.genruntimeconfig.cache
 E:\DartsStats\server\obj\Debug\net9.0\ref\DartsStats.Api.dll
+E:\DartsStats\server\obj\Debug\net9.0\DartsStats.Api.sourcelink.json

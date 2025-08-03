@@ -10,3 +10,4 @@ E:\DartsStats\DartsStats.ServiceDefaults\obj\Debug\net9.0\DartsStats.ServiceDefa
 E:\DartsStats\DartsStats.ServiceDefaults\obj\Debug\net9.0\refint\DartsStats.ServiceDefaults.dll
 E:\DartsStats\DartsStats.ServiceDefaults\obj\Debug\net9.0\DartsStats.ServiceDefaults.pdb
 E:\DartsStats\DartsStats.ServiceDefaults\obj\Debug\net9.0\ref\DartsStats.ServiceDefaults.dll
+E:\DartsStats\DartsStats.ServiceDefaults\obj\Debug\net9.0\DartsStats.ServiceDefaults.sourcelink.json

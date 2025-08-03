@@ -226,7 +226,12 @@ function App() {
           <tbody>
             {sortedPlayerStats().map(stats => (
               <tr key={stats.player.id}>
-                <td>{stats.player.name}</td>
+                <td>
+                  <div className="player-name">
+                    <strong>{stats.player.name}</strong>
+                    <div className="player-nickname">"{stats.player.nickname}"</div>
+                  </div>
+                </td>
                 <td>{stats.played}</td>
                 <td>{stats.won}</td>
                 <td>{stats.lost}</td>
@@ -255,11 +260,17 @@ function App() {
               </div>
               <div className="match-players">
                 <div className="player">
-                  <span>🎯 {players.find(p => p.id === match.player1Id)?.name || 'Unknown'}</span>
+                  <div className="player-info">
+                    <span className="player-name">🎯 {players.find(p => p.id === match.player1Id)?.name || 'Unknown'}</span>
+                    <span className="player-nickname">"{players.find(p => p.id === match.player1Id)?.nickname || ''}"</span>
+                  </div>
                   <span className="score">{match.player1Score}</span>
                 </div>
                 <div className="player">
-                  <span>🎯 {players.find(p => p.id === match.player2Id)?.name || 'Unknown'}</span>
+                  <div className="player-info">
+                    <span className="player-name">🎯 {players.find(p => p.id === match.player2Id)?.name || 'Unknown'}</span>
+                    <span className="player-nickname">"{players.find(p => p.id === match.player2Id)?.nickname || ''}"</span>
+                  </div>
                   <span className="score">{match.player2Score}</span>
                 </div>
               </div>
