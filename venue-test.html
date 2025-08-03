@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venue Info Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .venue-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f9f9f9;
+        }
+        .venue-image {
+            max-width: 300px;
+            height: auto;
+            margin: 10px 0;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #loading {
+            color: #666;
+            font-style: italic;
+        }
+        #error {
+            color: #dc3545;
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏟️ Premier League Darts Venue Information Test</h1>
+        <p>Test the venue information API by selecting a night:</p>
+        
+        <div>
+            <button onclick="testVenue('Night 1')">Night 1 - Belfast</button>
+            <button onclick="testVenue('Night 10')">Night 10 - Manchester</button>
+            <button onclick="testVenue('Final')">Final - London</button>
+        </div>
+        
+        <div id="loading" style="display: none;">Loading venue information...</div>
+        <div id="error" style="display: none;"></div>
+        <div id="venueInfo"></div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://localhost:7298/api';
+        
+        async function testVenue(round) {
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            const venueEl = document.getElementById('venueInfo');
+            
+            // Reset UI
+            loadingEl.style.display = 'block';
+            errorEl.style.display = 'none';
+            venueEl.innerHTML = '';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/venues/${encodeURIComponent(round)}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const venueInfo = await response.json();
+                
+                loadingEl.style.display = 'none';
+                displayVenueInfo(venueInfo);
+                
+            } catch (error) {
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                errorEl.textContent = `Error: ${error.message}`;
+                console.error('Venue fetch error:', error);
+            }
+        }
+        
+        function displayVenueInfo(venue) {
+            const venueEl = document.getElementById('venueInfo');
+            
+            venueEl.innerHTML = `
+                <div class="venue-card">
+                    <h2>${venue.name}</h2>
+                    <p><strong>📍 Location:</strong> ${venue.city}</p>
+                    <p><strong>👥 Capacity:</strong> ${venue.capacity}</p>
+                    ${venue.opened ? `<p><strong>🏗️ Opened:</strong> ${venue.opened}</p>` : ''}
+                    ${venue.image ? `<img src="${venue.image}" alt="${venue.name}" class="venue-image" />` : ''}
+                    <p><strong>About:</strong> ${venue.description}</p>
+                    ${venue.website ? `<p><a href="${venue.website}" target="_blank">🔗 Learn More</a></p>` : ''}
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
