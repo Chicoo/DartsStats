@@ -10,5 +10,5 @@ public class DartsStats_AppHost
 #pragma warning restore CS8981
 {
     private DartsStats_AppHost() { }
-    public static string ProjectPath => """E:\DartsStats\DartsStats.AppHost""";
+    public static string ProjectPath => """e:\DartsStats\DartsStats.AppHost""";
 }

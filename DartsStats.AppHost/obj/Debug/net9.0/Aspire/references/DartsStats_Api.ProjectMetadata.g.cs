@@ -9,5 +9,5 @@ namespace Projects;
 public class DartsStats_Api : global::Aspire.Hosting.IProjectMetadata
 #pragma warning restore CS8981
 {
-    public string ProjectPath => """E:\DartsStats\server\DartsStats.Api.csproj""";
+    public string ProjectPath => """e:\DartsStats\server\DartsStats.Api.csproj""";
 }
