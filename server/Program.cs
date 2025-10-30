@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using DartsStats.Api.Data;
 using DartsStats.Api.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,39 @@ builder.Services.AddScoped<DatabaseSeedService>();
 
 // Add HttpClient for external API calls
 builder.Services.AddHttpClient();
+
+// Add JWT Bearer Authentication for Keycloak
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var keycloakAuthority = builder.Configuration["Keycloak:Authority"];
+        var keycloakAudience = builder.Configuration["Keycloak:Audience"];
+
+        options.Authority = keycloakAuthority;
+        options.Audience = keycloakAudience;
+        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
+        
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidAudience = keycloakAudience,
+            ValidIssuer = keycloakAuthority,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+// Add Authorization with Admin policy
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireRole("admin");
+    });
+});
 
 // Add CORS
 builder.Services.AddCors(options =>
@@ -60,6 +95,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
