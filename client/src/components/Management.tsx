@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { Match, Player } from '../types';
+import type { Match, Player, UpdateMatchData } from '../types';
 import { fetchMatches, fetchPlayers, updateMatch, deleteMatch } from '../services/api';
 import authService from '../services/authService';
 import './Management.css';
@@ -8,7 +8,7 @@ export function Management() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
-  const [editForm, setEditForm] = useState<any>(null);
+  const [editForm, setEditForm] = useState<UpdateMatchData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);

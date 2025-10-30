@@ -1,3 +1,5 @@
+import type { UpdateMatchData } from '../types';
+
 // Use Aspire service discovery or fallback to localhost for development
 const getApiBaseUrl = () => {
     // Check for Aspire-provided API base URL
@@ -59,7 +61,7 @@ export const fetchVenueInfo = async (round: string) => {
 };
 
 // Management API endpoints (require authentication)
-export const updateMatch = async (id: number, matchData: any, token: string) => {
+export const updateMatch = async (id: number, matchData: UpdateMatchData, token: string) => {
     const response = await fetch(`${API_BASE_URL}/management/matches/${id}`, {
         method: 'PUT',
         headers: {

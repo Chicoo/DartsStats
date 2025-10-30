@@ -24,21 +24,22 @@ const venueMapping: Record<string, { city: string; venue: string }> = {
 };
 
 // Function to extract venue info from Wikipedia API response
-const parseWikipediaResponse = (data: any, venueName: string, city: string): VenueInfo => {
-  const pages = data.query?.pages;
+const parseWikipediaResponse = (data: Record<string, unknown>, venueName: string, city: string): VenueInfo => {
+  const query = data.query as Record<string, unknown> | undefined;
+  const pages = query?.pages as Record<string, unknown> | undefined;
   if (!pages) {
     return createFallbackVenueInfo(venueName, city);
   }
 
   const pageId = Object.keys(pages)[0];
-  const page = pages[pageId];
+  const page = pages[pageId] as Record<string, unknown>;
   
   if (!page || page.missing) {
     return createFallbackVenueInfo(venueName, city);
   }
 
-  const extract = page.extract || '';
-  const title = page.title || venueName;
+  const extract = (page.extract as string) || '';
+  const title = (page.title as string) || venueName;
   
   // Extract capacity from the text (common patterns)
   const capacityMatch = extract.match(/capacity[:\s]+(?:of\s+)?([0-9,]+)/i) || 
@@ -54,14 +55,15 @@ const parseWikipediaResponse = (data: any, venueName: string, city: string): Ven
   const opened = openedMatch ? openedMatch[1] : undefined;
   
   // Get thumbnail image if available
-  const thumbnail = page.thumbnail?.source;
+  const thumbnail = page.thumbnail as Record<string, unknown> | undefined;
+  const thumbnailSource = thumbnail?.source as string | undefined;
   
   return {
     name: title,
     city: city,
     capacity: capacity,
     description: extract.substring(0, 500) + (extract.length > 500 ? '...' : ''),
-    image: thumbnail,
+    image: thumbnailSource,
     opened: opened,
   };
 };

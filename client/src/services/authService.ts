@@ -71,8 +71,9 @@ class AuthService {
         if (!user) return false;
 
         // Check if user has admin role in Keycloak token
-        const profile = user.profile as any;
-        const roles = profile?.realm_access?.roles as string[] || [];
+        const profile = user.profile as Record<string, unknown>;
+        const realmAccess = profile?.realm_access as Record<string, unknown> | undefined;
+        const roles = realmAccess?.roles as string[] || [];
         return roles.includes('admin');
     }
 }
