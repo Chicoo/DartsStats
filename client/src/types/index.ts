@@ -44,3 +44,19 @@ export interface WeatherInfo {
     icon?: string;
     eventDate: string;
 }
+
+export interface UpdateMatchData {
+    player1Id: number;
+    player2Id: number;
+    matchDate: string;
+    player1Score: number;
+    player2Score: number;
+    player1Average: number;
+    player2Average: number;
+    player1180s: number;
+    player2180s: number;
+    player1HighestCheckout: number;
+    player2HighestCheckout: number;
+    season: string;
+    round: string;
+}

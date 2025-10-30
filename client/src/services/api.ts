@@ -1,3 +1,5 @@
+import type { UpdateMatchData } from '../types';
+
 // Use Aspire service discovery or fallback to localhost for development
 const getApiBaseUrl = () => {
     // Check for Aspire-provided API base URL
@@ -56,4 +58,51 @@ export const fetchVenueInfo = async (round: string) => {
         throw new Error(`Failed to fetch venue information: ${response.status}`);
     }
     return response.json();
+};
+
+// Management API endpoints (require authentication)
+export const updateMatch = async (id: number, matchData: UpdateMatchData, token: string) => {
+    const response = await fetch(`${API_BASE_URL}/management/matches/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(matchData)
+    });
+    
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({ message: 'Failed to update match' }));
+        throw new Error(error.message || 'Failed to update match');
+    }
+    
+    return response.json();
+};
+
+export const getMatchForEdit = async (id: number, token: string) => {
+    const response = await fetch(`${API_BASE_URL}/management/matches/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    
+    if (!response.ok) {
+        throw new Error('Failed to fetch match');
+    }
+    
+    return response.json();
+};
+
+export const deleteMatch = async (id: number, token: string) => {
+    const response = await fetch(`${API_BASE_URL}/management/matches/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({ message: 'Failed to delete match' }));
+        throw new Error(error.message || 'Failed to delete match');
+    }
 };
