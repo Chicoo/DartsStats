@@ -1,36 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "E:\\DartsStats\\DartsStats.ServiceDefaults\\DartsStats.ServiceDefaults.csproj": {}
+    "/home/runner/work/DartsStats/DartsStats/DartsStats.ServiceDefaults/DartsStats.ServiceDefaults.csproj": {}
   },
   "projects": {
-    "E:\\DartsStats\\DartsStats.ServiceDefaults\\DartsStats.ServiceDefaults.csproj": {
+    "/home/runner/work/DartsStats/DartsStats/DartsStats.ServiceDefaults/DartsStats.ServiceDefaults.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\DartsStats\\DartsStats.ServiceDefaults\\DartsStats.ServiceDefaults.csproj",
+        "projectUniqueName": "/home/runner/work/DartsStats/DartsStats/DartsStats.ServiceDefaults/DartsStats.ServiceDefaults.csproj",
         "projectName": "DartsStats.ServiceDefaults",
-        "projectPath": "E:\\DartsStats\\DartsStats.ServiceDefaults\\DartsStats.ServiceDefaults.csproj",
-        "packagesPath": "D:\\packages\\Nuget\\cache",
-        "outputPath": "E:\\DartsStats\\DartsStats.ServiceDefaults\\obj\\",
+        "projectPath": "/home/runner/work/DartsStats/DartsStats/DartsStats.ServiceDefaults/DartsStats.ServiceDefaults.csproj",
+        "packagesPath": "/home/runner/.nuget/packages/",
+        "outputPath": "/home/runner/work/DartsStats/DartsStats/DartsStats.ServiceDefaults/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\DevExpress 24.1\\Components\\Offline Packages",
-          "C:\\Program Files\\DevExpress 24.2\\Components\\Offline Packages",
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Marco\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 24.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 24.2.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/runner/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\DevExpress 24.2\\Components\\System\\Components\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -103,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
