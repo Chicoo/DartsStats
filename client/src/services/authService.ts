@@ -7,7 +7,7 @@ class AuthService {
 
     constructor() {
         const settings: UserManagerSettings = {
-            authority: import.meta.env.VITE_KEYCLOAK_AUTHORITY || 'https://keycloak.example.com/realms/dartsstats',
+            authority: import.meta.env.VITE_KEYCLOAK_AUTHORITY || 'http://localhost:8088/realms/dartsstats',
             client_id: import.meta.env.VITE_KEYCLOAK_CLIENT_ID || 'dartsstats-web',
             redirect_uri: `${window.location.origin}/callback`,
             post_logout_redirect_uri: window.location.origin,

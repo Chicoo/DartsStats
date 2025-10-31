@@ -11,6 +11,7 @@ var api = builder.AddProject<Projects.DartsStats_Api>("dartsStats-api")
 
 // Add the React frontend using npm with proper endpoint configuration and API reference
 builder.AddNpmApp("dartsStats-frontend", "../client", "dev")
+    .WithNpmPackageInstallation()
     .WithReference(api)
     .WithEnvironment("VITE_API_BASE_URL", api.GetEndpoint("http"))
     .WithHttpEndpoint(env: "PORT")
