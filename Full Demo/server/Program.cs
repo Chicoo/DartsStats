@@ -3,7 +3,6 @@ using DartsStats.Api.Data;
 using DartsStats.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +22,17 @@ builder.Services.AddDbContext<DartsDbContext>(options =>
 
 // Add our database seeding service
 builder.Services.AddScoped<DatabaseSeedService>();
+
+// Add Redis distributed cache
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = "DartsStats";
+});
+
+// Add cache service
+builder.Services.AddScoped<ICacheService, RedisCacheService>();
+
 
 // Add HttpClient for external API calls
 builder.Services.AddHttpClient();
