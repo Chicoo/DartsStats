@@ -9,6 +9,8 @@ var sqlServer = builder.AddSqlServer("sqlserver")
     .AddDatabase("DartsStats", "DartsStats");
 
 var redis = builder.AddRedis("redis")
+    .WithRedisInsight()
+    .WithRedisCommander()
     .WithLifetime(ContainerLifetime.Persistent)
     .WithDataVolume();
 
