@@ -3,12 +3,8 @@ using DartsStats.Api.Data;
 using DartsStats.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add service defaults & Aspire components.
-builder.AddServiceDefaults();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -23,6 +19,17 @@ builder.Services.AddDbContext<DartsDbContext>(options =>
 
 // Add our database seeding service
 builder.Services.AddScoped<DatabaseSeedService>();
+
+// Add Redis distributed cache
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = "DartsStats";
+});
+
+// Add cache service
+builder.Services.AddScoped<ICacheService, RedisCacheService>();
+
 
 // Add HttpClient for external API calls
 builder.Services.AddHttpClient();
@@ -91,7 +98,11 @@ app.UseCors("AllowFrontend");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "DartsStats API V1");
+        options.RoutePrefix = string.Empty; // Serve Swagger UI at root
+    });
 }
 
 app.UseHttpsRedirection();
@@ -100,8 +111,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapDefaultEndpoints();
 
 // Seed data
 using (var scope = app.Services.CreateScope())
