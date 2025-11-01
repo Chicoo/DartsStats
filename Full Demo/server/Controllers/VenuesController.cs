@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
+using DartsStats.Api.Services;
 
 namespace DartsStats.Api.Controllers;
 
@@ -9,6 +10,8 @@ public class VenuesController : ControllerBase
 {
     private readonly ILogger<VenuesController> _logger;
     private readonly HttpClient _httpClient;
+    private readonly ICacheService _cacheService;
+    private readonly IConfiguration _configuration;
 
     // Mapping of Premier League Darts nights to venue information and dates
     private static readonly Dictionary<string, (string City, string Venue, DateTime EventDate)> VenueMapping = new()
@@ -34,10 +37,12 @@ public class VenuesController : ControllerBase
         { "Final", ("London", "The O2 Arena", new DateTime(2025, 5, 29)) }
     };
 
-    public VenuesController(ILogger<VenuesController> logger, HttpClient httpClient)
+    public VenuesController(ILogger<VenuesController> logger, HttpClient httpClient, ICacheService cacheService, IConfiguration configuration)
     {
         _logger = logger;
         _httpClient = httpClient;
+        _cacheService = cacheService;
+        _configuration = configuration;
     }
 
     [HttpGet("{round}")]
@@ -52,15 +57,112 @@ public class VenuesController : ControllerBase
 
             var (city, venue, eventDate) = venueData;
             
-            // Try to fetch venue information from Wikipedia API
+            // Create cache key for this venue
+            var cacheKey = $"venue:{round}:{venue}";
+            
+            // Try to get from cache first
+            var cachedVenueInfo = await _cacheService.GetAsync<VenueInfo>(cacheKey);
+            if (cachedVenueInfo != null)
+            {
+                _logger.LogInformation("Retrieved venue info for {Round} from cache", round);
+                return Ok(cachedVenueInfo);
+            }
+            
+            // If not in cache, fetch from Wikipedia API
             var venueInfo = await FetchVenueInfoFromWikipedia(venue, city, eventDate);
             
+            // Cache the result
+            var cacheExpirationHours = _configuration.GetValue<int>("Cache:VenueExpirationHours", 24);
+            await _cacheService.SetAsync(cacheKey, venueInfo, TimeSpan.FromHours(cacheExpirationHours));
+            
+            _logger.LogInformation("Fetched and cached venue info for {Round}", round);
             return Ok(venueInfo);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error fetching venue information for round {Round}", round);
             return StatusCode(500, "An error occurred while fetching venue information");
+        }
+    }
+
+    [HttpDelete("cache/{round}")]
+    public async Task<ActionResult> ClearVenueCache(string round)
+    {
+        try
+        {
+            if (!VenueMapping.TryGetValue(round, out var venueData))
+            {
+                return NotFound($"No venue information found for round: {round}");
+            }
+
+            var (_, venue, _) = venueData;
+            var cacheKey = $"venue:{round}:{venue}";
+            
+            await _cacheService.RemoveAsync(cacheKey);
+            
+            _logger.LogInformation("Cleared cache for venue round {Round}", round);
+            return Ok($"Cache cleared for round: {round}");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error clearing cache for round {Round}", round);
+            return StatusCode(500, "An error occurred while clearing cache");
+        }
+    }
+
+    [HttpDelete("cache")]
+    public async Task<ActionResult> ClearAllVenueCache()
+    {
+        try
+        {
+            // Clear cache for all venues
+            foreach (var kvp in VenueMapping)
+            {
+                var round = kvp.Key;
+                var (_, venue, _) = kvp.Value;
+                var cacheKey = $"venue:{round}:{venue}";
+                await _cacheService.RemoveAsync(cacheKey);
+            }
+            
+            _logger.LogInformation("Cleared cache for all venues");
+            return Ok("Cache cleared for all venues");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error clearing all venue cache");
+            return StatusCode(500, "An error occurred while clearing cache");
+        }
+    }
+
+    [HttpGet("cache/status")]
+    public async Task<ActionResult> GetCacheStatus()
+    {
+        try
+        {
+            var cacheStatus = new List<object>();
+            
+            foreach (var kvp in VenueMapping)
+            {
+                var round = kvp.Key;
+                var (_, venue, _) = kvp.Value;
+                var cacheKey = $"venue:{round}:{venue}";
+                
+                var cachedData = await _cacheService.GetAsync<VenueInfo>(cacheKey);
+                cacheStatus.Add(new 
+                { 
+                    Round = round, 
+                    Venue = venue, 
+                    IsCached = cachedData != null,
+                    CacheKey = cacheKey
+                });
+            }
+            
+            return Ok(new { CacheStatus = cacheStatus });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error checking cache status");
+            return StatusCode(500, "An error occurred while checking cache status");
         }
     }
 
