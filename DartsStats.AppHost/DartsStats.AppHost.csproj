@@ -12,8 +12,9 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="13.0.0-preview.1.25530.2" />
-	<PackageReference Include="CommunityToolkit.Aspire.Hosting.NodeJS.Extensions" Version="9.8.0" />
-    <PackageReference Include="Aspire.Hosting.SqlServer" Version="13.0.0-preview.1.25530.2" />
+    <PackageReference Include="Aspire.Hosting.Keycloak" Version="13.1.0-preview.1.25531.7" />
+    <PackageReference Include="Aspire.Hosting.NodeJs" Version="13.1.0-preview.1.25531.7" />
+    <PackageReference Include="Aspire.Hosting.SqlServer" Version="13.1.0-preview.1.25551.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,36 +1,54 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import authService from '../services/authService';
 
 export function AuthCallback() {
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const handleCallback = async () => {
+    const handleCallback = () => {
       try {
-        const user = await authService.handleCallback();
-        if (user) {
-          // Redirect to management page after successful login
-          navigate('/management');
-        } else {
-          setError('Authentication failed');
+        const token = searchParams.get('token');
+        const refreshToken = searchParams.get('refreshToken');
+        const username = searchParams.get('username');
+        const isAdmin = searchParams.get('isAdmin') === 'true';
+        const errorParam = searchParams.get('error');
+
+        if (errorParam) {
+          setError('Authentication failed. Please try again.');
+          setTimeout(() => navigate('/'), 3000);
+          return;
         }
+
+        if (!token || !username) {
+          setError('Invalid authentication response');
+          setTimeout(() => navigate('/'), 3000);
+          return;
+        }
+
+        // Save authentication data
+        authService.saveAuthData(token, refreshToken || '', username, isAdmin);
+        
+        // Redirect to management page
+        navigate('/management');
       } catch (err) {
         console.error('Callback error:', err);
         setError(err instanceof Error ? err.message : 'Authentication failed');
+        setTimeout(() => navigate('/'), 3000);
       }
     };
 
     handleCallback();
-  }, [navigate]);
+  }, [searchParams, navigate]);
 
   if (error) {
     return (
       <div style={{ padding: '2rem', textAlign: 'center' }}>
         <h2>❌ Authentication Error</h2>
         <p>{error}</p>
-        <button onClick={() => navigate('/')}>Return Home</button>
+        <p>Redirecting to home page...</p>
       </div>
     );
   }

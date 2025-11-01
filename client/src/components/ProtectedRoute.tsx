@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
 
 interface ProtectedRouteProps {
@@ -11,6 +12,7 @@ export function ProtectedRoute({ children, requireAdmin = false }: ProtectedRout
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -45,7 +47,7 @@ export function ProtectedRoute({ children, requireAdmin = false }: ProtectedRout
 
   if (!isAuthenticated) {
     // Redirect to login
-    authService.login();
+    navigate('/login');
     return null;
   }
 
@@ -54,7 +56,7 @@ export function ProtectedRoute({ children, requireAdmin = false }: ProtectedRout
       <div style={{ padding: '2rem', textAlign: 'center' }}>
         <h2>🔒 Access Denied</h2>
         <p>You don't have administrator privileges to access this section.</p>
-        <button onClick={() => window.location.href = '/'}>Return Home</button>
+        <button onClick={() => navigate('/')}>Return Home</button>
       </div>
     );
   }

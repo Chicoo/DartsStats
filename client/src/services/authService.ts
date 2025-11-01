@@ -1,80 +1,146 @@
-import { UserManager, User } from 'oidc-client-ts';
-import type { UserManagerSettings } from 'oidc-client-ts';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5167';
+
+interface LoginResponse {
+    token: string;
+    refreshToken: string;
+    username: string;
+    isAdmin: boolean;
+    expiresIn: number;
+}
 
 class AuthService {
-    private userManager: UserManager;
-    private user: User | null = null;
+    private token: string | null = null;
+    private refreshToken: string | null = null;
+    private username: string | null = null;
+    private isAdminUser: boolean = false;
 
     constructor() {
-        const settings: UserManagerSettings = {
-            authority: import.meta.env.VITE_KEYCLOAK_AUTHORITY || 'http://localhost:8088/realms/dartsstats',
-            client_id: import.meta.env.VITE_KEYCLOAK_CLIENT_ID || 'dartsstats-web',
-            redirect_uri: `${window.location.origin}/callback`,
-            post_logout_redirect_uri: window.location.origin,
-            response_type: 'code',
-            scope: 'openid profile email',
-            automaticSilentRenew: true,
-            loadUserInfo: true
-        };
-
-        this.userManager = new UserManager(settings);
-        this.initUser();
+        this.loadFromStorage();
     }
 
-    private async initUser() {
-        try {
-            this.user = await this.userManager.getUser();
-        } catch (error) {
-            console.error('Error loading user:', error);
-        }
+    private loadFromStorage() {
+        this.token = localStorage.getItem('auth_token');
+        this.refreshToken = localStorage.getItem('auth_refresh_token');
+        this.username = localStorage.getItem('auth_username');
+        this.isAdminUser = localStorage.getItem('auth_isAdmin') === 'true';
     }
 
-    async login(): Promise<void> {
-        await this.userManager.signinRedirect();
+    private saveToStorage(token: string, refreshToken: string, username: string, isAdmin: boolean) {
+        localStorage.setItem('auth_token', token);
+        localStorage.setItem('auth_refresh_token', refreshToken);
+        localStorage.setItem('auth_username', username);
+        localStorage.setItem('auth_isAdmin', isAdmin.toString());
+        this.token = token;
+        this.refreshToken = refreshToken;
+        this.username = username;
+        this.isAdminUser = isAdmin;
     }
 
-    async handleCallback(): Promise<User | null> {
-        try {
-            const user = await this.userManager.signinRedirectCallback();
-            this.user = user;
-            return user;
-        } catch (error) {
-            console.error('Error handling callback:', error);
-            return null;
-        }
+    // Public method to save auth data from callback
+    saveAuthData(token: string, refreshToken: string, username: string, isAdmin: boolean) {
+        this.saveToStorage(token, refreshToken, username, isAdmin);
+    }
+
+    private clearStorage() {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('auth_refresh_token');
+        localStorage.removeItem('auth_username');
+        localStorage.removeItem('auth_isAdmin');
+        this.token = null;
+        this.refreshToken = null;
+        this.username = null;
+        this.isAdminUser = false;
     }
 
     async logout(): Promise<void> {
-        await this.userManager.signoutRedirect();
-        this.user = null;
-    }
-
-    async getUser(): Promise<User | null> {
-        if (!this.user) {
-            this.user = await this.userManager.getUser();
+        if (this.refreshToken) {
+            try {
+                await fetch(`${API_BASE_URL}/api/auth/logout`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.token}`,
+                    },
+                    body: JSON.stringify({ refreshToken: this.refreshToken }),
+                });
+            } catch (error) {
+                console.error('Logout request failed:', error);
+            }
         }
-        return this.user;
+        this.clearStorage();
     }
 
     async getAccessToken(): Promise<string | null> {
-        const user = await this.getUser();
-        return user?.access_token || null;
+        // Check if token is expired and refresh if needed
+        if (this.token && await this.isTokenExpired()) {
+            await this.refreshAccessToken();
+        }
+        return this.token;
+    }
+
+    private async isTokenExpired(): Promise<boolean> {
+        if (!this.token) return true;
+        
+        try {
+            const payload = JSON.parse(atob(this.token.split('.')[1]));
+            const exp = payload.exp * 1000; // Convert to milliseconds
+            // Refresh if token expires in less than 5 minutes
+            return Date.now() > (exp - 5 * 60 * 1000);
+        } catch {
+            return true;
+        }
+    }
+
+    private async refreshAccessToken(): Promise<void> {
+        if (!this.refreshToken) {
+            this.clearStorage();
+            throw new Error('No refresh token available');
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/auth/refresh`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ refreshToken: this.refreshToken }),
+            });
+
+            if (!response.ok) {
+                this.clearStorage();
+                throw new Error('Token refresh failed');
+            }
+
+            const data: LoginResponse = await response.json();
+            this.saveToStorage(data.token, data.refreshToken, data.username, data.isAdmin);
+        } catch (error) {
+            this.clearStorage();
+            throw error;
+        }
     }
 
     async isAuthenticated(): Promise<boolean> {
-        const user = await this.getUser();
-        return !!user && !user.expired;
+        if (!this.token) return false;
+        
+        // Try to refresh if expired
+        if (await this.isTokenExpired()) {
+            try {
+                await this.refreshAccessToken();
+                return true;
+            } catch {
+                return false;
+            }
+        }
+        
+        return true;
     }
 
     async isAdmin(): Promise<boolean> {
-        const user = await this.getUser();
-        if (!user) return false;
+        return this.isAdminUser && await this.isAuthenticated();
+    }
 
-        // Check if user has admin role in Keycloak token
-        const profile = user.profile as Record<string, unknown>;
-        const realmAccess = profile?.realm_access as Record<string, unknown> | undefined;
-        const roles = realmAccess?.roles as string[] || [];
-        return roles.includes('admin');
+    getUsername(): string | null {
+        return this.username;
     }
 }
 

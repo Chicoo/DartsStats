@@ -1,7 +1,8 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import App from './App';
 import { Management } from './components/Management';
+import { Login } from './components/Login';
 import { AuthCallback } from './components/AuthCallback';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import authService from './services/authService';
@@ -32,62 +33,86 @@ function Root() {
     }
   };
 
-  const handleLogin = async () => {
-    await authService.login();
+  return (
+    <BrowserRouter>
+      <RootContent 
+        isAuthenticated={isAuthenticated}
+        isAdmin={isAdmin}
+        loading={loading}
+        onAuthChange={checkAuth}
+      />
+    </BrowserRouter>
+  );
+}
+
+function RootContent({ 
+  isAuthenticated, 
+  isAdmin, 
+  loading,
+  onAuthChange 
+}: { 
+  isAuthenticated: boolean;
+  isAdmin: boolean;
+  loading: boolean;
+  onAuthChange: () => void;
+}) {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/login');
   };
 
   const handleLogout = async () => {
     await authService.logout();
-    setIsAuthenticated(false);
-    setIsAdmin(false);
+    onAuthChange();
+    navigate('/');
   };
 
   return (
-    <BrowserRouter>
-      <div className="app-root">
-        <nav className="app-nav">
-          <div className="nav-container">
-            <div className="nav-brand">
-              <Link to="/">🎯 DartsStats</Link>
-            </div>
-            <div className="nav-links">
-              <Link to="/" className="nav-link">Home</Link>
-              {isAdmin && (
-                <Link to="/management" className="nav-link">🔐 Management</Link>
+    <div className="app-root">
+      <nav className="app-nav">
+        <div className="nav-container">
+          <div className="nav-brand">
+            <Link to="/">🎯 DartsStats</Link>
+          </div>
+          <div className="nav-links">
+            <Link to="/" className="nav-link">Home</Link>
+            {isAdmin && (
+              <Link to="/management" className="nav-link">🔐 Management</Link>
+            )}
+            <div className="nav-auth">
+              {loading ? (
+                <span className="nav-loading">...</span>
+              ) : isAuthenticated ? (
+                <button onClick={handleLogout} className="btn-auth btn-logout">
+                  🚪 Logout
+                </button>
+              ) : (
+                <button onClick={handleLogin} className="btn-auth btn-login">
+                  🔑 Admin Login
+                </button>
               )}
-              <div className="nav-auth">
-                {loading ? (
-                  <span className="nav-loading">...</span>
-                ) : isAuthenticated ? (
-                  <button onClick={handleLogout} className="btn-auth btn-logout">
-                    🚪 Logout
-                  </button>
-                ) : (
-                  <button onClick={handleLogin} className="btn-auth btn-login">
-                    🔑 Admin Login
-                  </button>
-                )}
-              </div>
             </div>
           </div>
-        </nav>
-        
-        <main className="app-main">
-          <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/callback" element={<AuthCallback />} />
-            <Route 
-              path="/management" 
-              element={
-                <ProtectedRoute requireAdmin={true}>
-                  <Management />
-                </ProtectedRoute>
-              } 
-            />
-          </Routes>
-        </main>
-      </div>
-    </BrowserRouter>
+        </div>
+      </nav>
+      
+      <main className="app-main">
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route 
+            path="/management" 
+            element={
+              <ProtectedRoute requireAdmin={true}>
+                <Management />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
+      </main>
+    </div>
   );
 }
 
