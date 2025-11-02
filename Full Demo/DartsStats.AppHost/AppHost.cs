@@ -16,8 +16,13 @@ var redis = builder.AddRedis("redis")
 
 var keycloak_username = builder.AddParameter("keycloak-username", "admin");
 var keycloak_password = builder.AddParameter("keycloak-password", "admin");
+if(!int.TryParse(builder.Configuration["Keycloak:Port"], out var keycloak_port))
+{
+    keycloak_port = 8080;
+}
 
-var keycloak = builder.AddKeycloak("keycloak", 8089, keycloak_username, keycloak_password)
+var keycloak = builder.AddKeycloak("keycloak", keycloak_port, keycloak_username, keycloak_password)
+    .WithImageTag("latest")
     .WithLifetime(ContainerLifetime.Persistent)
     .WithDataVolume()
     .WithRealmImport("../../data");
