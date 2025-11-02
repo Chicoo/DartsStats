@@ -2589,6 +2589,9 @@
             "temporary": false
           }
         ],
+        "clientRoles": {
+          "dartsstats-web": [ "admin" ]
+        },
         "realmRoles": [
           "offline_access",
           "default-roles-myrealm"

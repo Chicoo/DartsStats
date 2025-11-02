@@ -6,7 +6,7 @@ var sqlServer = builder.AddSqlServer("sqlserver")
     .WithLifetime(ContainerLifetime.Persistent)
     .WithDbGate()
     .WithDataVolume()
-    .AddDatabase("DartsStats", "DartsStats");
+    .AddDatabase("dartsstats", "DartsStats");
 
 var redis = builder.AddRedis("redis")
     .WithRedisInsight()
@@ -30,10 +30,11 @@ var keycloak = builder.AddKeycloak("keycloak", keycloak_port, keycloak_username,
 // Add the API project
 var api = builder.AddProject<Projects.DartsStats_Api>("dartsStats-api")
     .WaitFor(keycloak)
-    .WaitFor(sqlServer)
     .WithEnvironment("Keycloak__Authority", $"{keycloak.GetEndpoint("http")}/realms/dartsstats")
-    .WithEnvironment("ConnectionStrings__dartsstats", sqlServer.Resource.ConnectionStringExpression)
-    .WithEnvironment("ConnectionStrings__redis", redis.Resource.ConnectionStringExpression);
+    .WithReference(redis)
+    .WaitFor(redis)
+    .WaitFor(sqlServer)
+    .WithEnvironment("ConnectionStrings__dartsstats", sqlServer.Resource.ConnectionStringExpression);
 
 // Add the React frontend using npm with proper endpoint configuration and API reference
 builder.AddJavaScriptApp("dartsStats-frontend", "../client", "dev")
