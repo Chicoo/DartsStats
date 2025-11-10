@@ -17,6 +17,7 @@
 	  <PackageReference Include="Aspire.Hosting.Redis" Version="13.1.0-preview.1.25551.4" />
 	  <PackageReference Include="Aspire.Hosting.SqlServer" Version="13.1.0-preview.1.25551.4" />
 	  <PackageReference Include="CommunityToolkit.Aspire.Hosting.SqlServer.Extensions" Version="9.8.0" />
+	  <PackageReference Include="StackExchange.Redis" Version="2.9.32" />
   </ItemGroup>
 
   <ItemGroup>

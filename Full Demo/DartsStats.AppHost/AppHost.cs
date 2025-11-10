@@ -1,5 +1,3 @@
-using Aspire.Hosting;
-
 var builder = DistributedApplication.CreateBuilder(args);
 
 var compose = builder.AddDockerComposeEnvironment("dartsstats-compose");
@@ -42,6 +40,25 @@ var redis = builder.AddRedis("redis", port: 6380)
     .WithRedisCommander()
     .WithLifetime(ContainerLifetime.Persistent)
     .WithDataVolume();
+
+redis.WithCommand("clear-data", "Clear Redis Data", async context =>
+{
+    var connectionString = await redis.Resource.GetConnectionStringAsync();
+    if (connectionString != null)
+    {
+        var configOptions = StackExchange.Redis.ConfigurationOptions.Parse(connectionString);
+        configOptions.AllowAdmin = true;
+        
+        var connection = await StackExchange.Redis.ConnectionMultiplexer.ConnectAsync(configOptions);
+        var server = connection.GetServer(connection.GetEndPoints().First());
+        await server.FlushAllDatabasesAsync();
+        await connection.CloseAsync();
+        return CommandResults.Success();
+    }
+    return CommandResults.Failure("Could not connect to Redis");
+});
+
+
 
 var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
     .WaitFor(keycloak)
