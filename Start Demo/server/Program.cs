@@ -108,20 +108,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        if (builder.Environment.IsDevelopment())
-        {
-            policy
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-        }
-        else
-        {
-            policy
-                .WithOrigins("http://localhost:3000", "http://localhost:5173")
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-        }
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
     });
 });
 
@@ -131,15 +121,12 @@ var app = builder.Build();
 // Use CORS first, before other middleware
 app.UseCors("AllowFrontend");
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "DartsStats API V1");
-        options.RoutePrefix = string.Empty; // Serve Swagger UI at root
-    });
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "DartsStats API V1");
+    options.RoutePrefix = string.Empty; // Serve Swagger UI at root
+});
 
 app.UseHttpsRedirection();
 
