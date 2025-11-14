@@ -68,6 +68,21 @@ var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
     .WaitFor(sqlServer)
     .WithEnvironment("ConnectionStrings__dartsstats", sqlServer.Resource.ConnectionStringExpression)
     .WithExternalHttpEndpoints()
+    .WithUrls(context =>
+    {
+        foreach (var u in context.Urls)
+        {
+            u.DisplayLocation = UrlDisplayLocation.DetailsOnly;
+        }
+
+        // Only show the /scalar URL in the UI
+        context.Urls.Add(new ResourceUrlAnnotation()
+        {
+            Url = "/scalar",
+            DisplayText = "OpenAPI Docs",
+            Endpoint = context.GetEndpoint("https")
+        });
+    })
     .PublishAsDockerComposeService((resource, service) =>
     {
         service.Ports =
@@ -76,7 +91,7 @@ var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
         ];
     });
 
-builder.AddJavaScriptApp("dartsStats-frontend", "../client", "dev")
+builder.AddJavaScriptApp("frontend", "../client", "dev")
     .WithReference(api)
     .WaitFor(api)
     .WithEnvironment("VITE_API_BASE_URL", api.GetEndpoint("http"))
@@ -86,7 +101,6 @@ builder.AddJavaScriptApp("dartsStats-frontend", "../client", "dev")
     {
         options.WithDockerfile("../client");
         options.WithImageTag("latest");
-        options.WithImageRegistry("acrtopfas.azurecr.io");
     })
     .PublishAsDockerComposeService((resource, service) =>
     {
