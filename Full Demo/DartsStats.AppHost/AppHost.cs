@@ -1,6 +1,8 @@
-using k8s.Models;
+using DartsStats.AppHost;
+using DevProxy.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
@@ -73,7 +75,6 @@ var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
     .WaitFor(sqlServer)
     .WithEnvironment("ConnectionStrings__dartsstats", sqlServer.Resource.ConnectionStringExpression)
     .WithExternalHttpEndpoints()
-    
     .WithUrls(context =>
     {
         foreach (var u in context.Urls)
@@ -97,48 +98,14 @@ var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
         ];
     });
 
-var devProxy = builder.AddDevProxyExecutable("devproxy")
-    //.WithConfigFolder("../data/devproxy")
-    //.WithConfigFile("./devproxy.json")
-    //.WithProxy()
-    .WithConfigFile("../data/devproxy/devproxy.json")
+var devProxy = builder.AddDevProxyContainer("devproxy")
+    .WithDeveloperCertificateTrust(true)
+    .WithConfigFolder("../data/devproxy")
+    .WithConfigFile("./devproxy.json")
+    .WithCertFolder("../data/devproxy/cert")
     .WithExplicitStart()
-    .WithUrlsToWatch(() => [$"https://en.wikipedia.org/*"]);
-
-
-devProxy.OnResourceReady(async (resource, evt, cancellationToken) =>
-{
-    api.WithEnvironment("HTTP_PROXY", "http://localhost:8000")
-        .WithEnvironment("HTTPS_PROXY", "http://localhost:8000");
-
-    // Get the ResourceNotificationService to trigger a restart
-    var notificationService = evt.Services.GetRequiredService<ResourceNotificationService>();
-    var logger = evt.Services.GetRequiredService<ILogger<Program>>();
-
-    logger.LogInformation("Dev Proxy is ready. Restarting API to apply proxy settings...");
-
-    // Find the restart command annotation on the API resource
-    var restartCommand = api.Resource.Annotations
-        .OfType<ResourceCommandAnnotation>()
-        .FirstOrDefault(c => c.Name == KnownResourceCommands.RestartCommand);
-
-    if (restartCommand != null)
-    {
-        var context = new ExecuteCommandContext()
-        {
-            ServiceProvider = evt.Services,
-            ResourceName = api.Resource.Name,
-            CancellationToken = cancellationToken
-        };
-
-        await restartCommand.ExecuteCommand(context);
-        logger.LogInformation("API resource restarted successfully.");
-    }
-    else
-    {
-        logger.LogWarning("Restart command not found on API resource.");
-    }
-});
+    .WithUrlsToWatch(() => [$"https://en.wikipedia.org/*"])
+    .WithProxy(api);
 
 builder.AddJavaScriptApp("frontend", "../client", "dev")
     .WithReference(api)
@@ -148,7 +115,7 @@ builder.AddJavaScriptApp("frontend", "../client", "dev")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile(options =>
     {
-        options.WithDockerfile("../client");
+        options.WithDockerfile("./client");
         options.WithImageTag("latest");
     })
     .PublishAsDockerComposeService((resource, service) =>
