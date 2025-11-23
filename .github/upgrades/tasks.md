@@ -4,7 +4,7 @@
 
 This tasks file encodes an executable plan to migrate the `DartsStats` solution from .NET 9.0 → .NET 10.0 (Preview) following the Big Bang approach described in the Plan. Tasks follow the strategy: prerequisites separated, atomic framework+package+compilation changes combined into a single upgrade task, testing and finalization separated. Each task is bounded, deterministic, and references the Plan for details.
 
-**Progress**: 1/5 tasks complete (20%) ![20%](https://progress-bar.xyz/20)
+**Progress**: 2/5 tasks complete (40%) ![40%](https://progress-bar.xyz/40)
 
 ## Tasks
 
@@ -17,23 +17,23 @@ This tasks file encodes an executable plan to migrate the `DartsStats` solution 
 - [✓] (4) Verify required infrastructure endpoints are reachable as needed for tests: SQL Server, Redis, Keycloak (per Plan §Prerequisites / Infrastructure). (**Verify**)
 - [✓] (5) Verify repository working tree is clean (no uncommitted changes) with `git status --porcelain` (expect empty). (**Verify**)
 
-### [▶] TASK-002: Create pre-migration checkpoint (git)
+### [✓] TASK-002: Create pre-migration checkpoint (git) *(Completed: 2025-11-23 12:34)*
 **References**: Plan §Prerequisites, Plan §Appendix A
 
-- [▶] (1) Create a local commit checkpoint of the current working tree with message: "TASK-002: Pre-migration checkpoint" (see Plan §Prerequisites).  
-- [▶] (2) Create a local tag `pre-net10-migration` referencing that commit. (**Verify**)  
-- [▶] (3) OPTIONAL: Push commit and tag to remote if a remote is available (verify push succeeded). (**Verify**)
+- [✓] (1) Create a local commit checkpoint of the current working tree with message: "TASK-002: Pre-migration checkpoint" (see Plan §Prerequisites).  
+- [✓] (2) Create a local tag `pre-net10-migration` referencing that commit. (**Verify**)  
+- [✓] (3) OPTIONAL: Push commit and tag to remote if a remote is available (verify push succeeded). (**Verify**)
 
-### [ ] TASK-003: Atomic framework and package upgrade (all projects)
+### [▶] TASK-003: Atomic framework and package upgrade (all projects)
 **References**: Plan §Migration Strategy, Plan §Project-by-Project Migration Plans (Phase 1..3), Plan §Package Update Reference, Plan §Breaking Changes Catalog
 
-- [ ] (1) Update `TargetFramework` to `net10.0` in all projects listed in Plan §Appendix A. Follow dependency order in Plan §Dependency Analysis (ServiceDefaults → Api → AppHost). (Make edits to `*.csproj` files per Plan §Phase steps.)  
-- [ ] (2) Update NuGet packages per Plan §Package Update Reference (use the `dotnet add package` commands listed there for each project). (Do NOT enumerate full package table here; follow Plan §Package Update Reference.)  
-- [ ] (3) Restore dependencies at solution root (`dotnet restore`). (**Verify**)  
-- [ ] (4) Build the solution to identify compilation errors (`dotnet build`).  
-- [ ] (5) Fix compilation errors found in the build. Limit code changes to deterministic compilation fixes and package-binding updates as informed by Plan §Breaking Changes Catalog. Rebuild once after fixes. If build still fails after this single fix+rebuild iteration, record failure details and open an ISSUE with build logs and stop (do not loop). (**Verify**)  
-- [ ] (6) Solution builds with 0 errors (successful `dotnet build`) (**Verify**)  
-- [ ] (7) Commit changes with message: `"TASK-003: Upgrade target frameworks and packages to .NET 10.0"` and ensure commit is present locally. (**Verify**)
+- [▶] (1) Update `TargetFramework` to `net10.0` in all projects listed in Plan §Appendix A. Follow dependency order in Plan §Dependency Analysis (ServiceDefaults → Api → AppHost). (Make edits to `*.csproj` files per Plan §Phase steps.)  
+- [▶] (2) Update NuGet packages per Plan §Package Update Reference (use the `dotnet add package` commands listed there for each project). (Do NOT enumerate full package table here; follow Plan §Package Update Reference.)  
+- [▶] (3) Restore dependencies at solution root (`dotnet restore`). (**Verify**)
+- [▶] (4) Build the solution to identify compilation errors (`dotnet build`).  
+- [▶] (5) Fix compilation errors found in the build. Limit code changes to deterministic compilation fixes and package-binding updates as informed by Plan §Breaking Changes Catalog. Rebuild once after fixes. If build still fails after this single fix+rebuild iteration, record failure details and open an ISSUE with build logs and stop (do not loop). (**Verify**)
+- [▶] (6) Solution builds with 0 errors (successful `dotnet build`) (**Verify**)
+- [▶] (7) Commit changes with message: "TASK-003: Upgrade target frameworks and packages to .NET 10.0" and ensure commit is present locally. (**Verify**)
 
 ### [ ] TASK-004: Run automated tests and integration verification
 **References**: Plan §Testing Strategy (Levels 1–3), Plan §Phase 1..3, Plan §AppHost
