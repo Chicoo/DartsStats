@@ -1,3 +1,7 @@
+using k8s.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 var compose = builder.AddDockerComposeEnvironment("dartsstats-compose");
@@ -24,7 +28,7 @@ var keycloak = builder.AddKeycloak("keycloak", keycloak_port, keycloak_username,
     .WithImageTag("latest")
     .WithLifetime(ContainerLifetime.Persistent)
     .WithDataVolume()
-    .WithRealmImport("../../data")
+    .WithRealmImport("../data/keycloak")
     .WithExternalHttpEndpoints()
     .PublishAsDockerComposeService((resource, service) =>
     {
@@ -34,6 +38,9 @@ var keycloak = builder.AddKeycloak("keycloak", keycloak_port, keycloak_username,
             "--import-realm"
         ];
     });
+
+keycloak_username.WithParentRelationship(keycloak);
+keycloak_password.WithParentRelationship(keycloak);
 
 var redis = builder.AddRedis("redis", port: 6380)
     .WithRedisInsight()
@@ -58,8 +65,6 @@ redis.WithCommand("clear-data", "Clear Redis Data", async context =>
     return CommandResults.Failure("Could not connect to Redis");
 });
 
-
-
 var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
     .WaitFor(keycloak)
     .WithEnvironment("Keycloak__Authority", $"{keycloak.GetEndpoint("http")}/realms/dartsstats")
@@ -68,6 +73,7 @@ var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
     .WaitFor(sqlServer)
     .WithEnvironment("ConnectionStrings__dartsstats", sqlServer.Resource.ConnectionStringExpression)
     .WithExternalHttpEndpoints()
+    
     .WithUrls(context =>
     {
         foreach (var u in context.Urls)
@@ -90,6 +96,49 @@ var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
             "5167:${DARTSAPI_PORT}"
         ];
     });
+
+var devProxy = builder.AddDevProxyExecutable("devproxy")
+    //.WithConfigFolder("../data/devproxy")
+    //.WithConfigFile("./devproxy.json")
+    //.WithProxy()
+    .WithConfigFile("../data/devproxy/devproxy.json")
+    .WithExplicitStart()
+    .WithUrlsToWatch(() => [$"https://en.wikipedia.org/*"]);
+
+
+devProxy.OnResourceReady(async (resource, evt, cancellationToken) =>
+{
+    api.WithEnvironment("HTTP_PROXY", "http://localhost:8000")
+        .WithEnvironment("HTTPS_PROXY", "http://localhost:8000");
+
+    // Get the ResourceNotificationService to trigger a restart
+    var notificationService = evt.Services.GetRequiredService<ResourceNotificationService>();
+    var logger = evt.Services.GetRequiredService<ILogger<Program>>();
+
+    logger.LogInformation("Dev Proxy is ready. Restarting API to apply proxy settings...");
+
+    // Find the restart command annotation on the API resource
+    var restartCommand = api.Resource.Annotations
+        .OfType<ResourceCommandAnnotation>()
+        .FirstOrDefault(c => c.Name == KnownResourceCommands.RestartCommand);
+
+    if (restartCommand != null)
+    {
+        var context = new ExecuteCommandContext()
+        {
+            ServiceProvider = evt.Services,
+            ResourceName = api.Resource.Name,
+            CancellationToken = cancellationToken
+        };
+
+        await restartCommand.ExecuteCommand(context);
+        logger.LogInformation("API resource restarted successfully.");
+    }
+    else
+    {
+        logger.LogWarning("Restart command not found on API resource.");
+    }
+});
 
 builder.AddJavaScriptApp("frontend", "../client", "dev")
     .WithReference(api)

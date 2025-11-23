@@ -1,0 +1,26 @@
+{
+  "errors": [
+    {
+      "request": {
+        "url": "https://en.wikipedia.org/*"
+      },
+      "responses": [
+        {
+          "statusCode": 500,
+          "headers": [
+            {
+              "name": "content-type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "body": {
+            "error": {
+              "code": "InternalServerError",
+              "message": "An internal server error occurred."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

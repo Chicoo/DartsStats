@@ -1,0 +1,35 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/dev-proxy/main/schemas/v1.3.0/rc.schema.json",
+  "plugins": [
+    {
+      "name": "GenericRandomErrorPlugin",
+      "enabled": true,
+      "pluginPath": "~appFolder/plugins/DevProxy.Plugins.dll",
+      "configSection": "error500Config"
+    },
+    {
+      "name": "GenericRandomErrorPlugin",
+      "enabled": true,
+      "pluginPath": "~appFolder/plugins/DevProxy.Plugins.dll",
+      "configSection": "error503Config"
+    }
+  ],
+  "urlsToWatch": [
+    "https://en.wikipedia.org/*"
+  ],
+  "error500Config": {
+    "$schema": "https://raw.githubusercontent.com/microsoft/dev-proxy/main/schemas/v1.3.0/genericrandomerrorplugin.schema.json",
+    "errorsFile": "devproxy-errors-500.json",
+    "rate": 30
+  },
+  "error503Config": {
+    "$schema": "https://raw.githubusercontent.com/microsoft/dev-proxy/main/schemas/v1.3.0/genericrandomerrorplugin.schema.json",
+    "errorsFile": "devproxy-errors-503.json",
+    "rate": 20
+  },
+  "logLevel": "information",
+  "newVersionNotification": "stable",
+  "showSkipMessages": true,
+  "showTimestamps": true,
+  "validateSchemas": true
+}

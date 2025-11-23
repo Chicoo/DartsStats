@@ -1,0 +1,30 @@
+{
+  "errors": [
+    {
+      "request": {
+        "url": "https://en.wikipedia.org/*"
+      },
+      "responses": [
+        {
+          "statusCode": 503,
+          "headers": [
+            {
+              "name": "Retry-After",
+              "value": "10"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "body": {
+            "error": {
+              "code": "ServiceUnavailable",
+              "message": "The service is temporarily unavailable. Please try again later."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
