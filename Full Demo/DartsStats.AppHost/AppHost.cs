@@ -67,12 +67,21 @@ redis.WithCommand("clear-data", "Clear Redis Data", async context =>
     return CommandResults.Failure("Could not connect to Redis");
 });
 
+var devProxy = builder.AddDevProxyContainer("devproxy")
+    .WithDeveloperCertificateTrust(true)
+    .WithConfigFolder("../data/devproxy")
+    .WithConfigFile("./devproxy.json")
+    .WithCertFolder("../data/devproxy/cert")
+    .WithExplicitStart()
+    .WithUrlsToWatch(() => [$"https://en.wikipedia.org/*"]);
+
 var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
     .WaitFor(keycloak)
     .WithEnvironment("Keycloak__Authority", $"{keycloak.GetEndpoint("http")}/realms/dartsstats")
     .WithReference(redis)
     .WaitFor(redis)
     .WaitFor(sqlServer)
+    .WithDevProxy(devProxy)
     .WithEnvironment("ConnectionStrings__dartsstats", sqlServer.Resource.ConnectionStringExpression)
     .WithExternalHttpEndpoints()
     .WithUrls(context =>
@@ -98,20 +107,10 @@ var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
         ];
     });
 
-var devProxy = builder.AddDevProxyContainer("devproxy")
-    .WithDeveloperCertificateTrust(true)
-    .WithConfigFolder("../data/devproxy")
-    .WithConfigFile("./devproxy.json")
-    .WithCertFolder("../data/devproxy/cert")
-    .WithExplicitStart()
-    .WithUrlsToWatch(() => [$"https://en.wikipedia.org/*"])
-    .WithProxy(api);
-
 builder.AddViteApp("frontend", "../client", "dev")
     .WithReference(api)
     .WaitFor(api)
     .WithEnvironment("VITE_API_BASE_URL", api.GetEndpoint("http"))
-    //.WithHttpEndpoint(env: "PORT")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile(options =>
     {

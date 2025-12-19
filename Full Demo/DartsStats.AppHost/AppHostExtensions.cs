@@ -1,7 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Aspire.Hosting.ApplicationModel;
 using DevProxy.Hosting;
+using k8s.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace DartsStats.AppHost;
 
@@ -10,79 +11,91 @@ namespace DartsStats.AppHost;
 /// </summary>
 public static class AppHostExtensions
 {
-    extension<T>(IResourceBuilder<T> builder) where T : IResource, IResourceWithEndpoints
+    extension<T>(IResourceBuilder<T> builder) where T : IResource, IResourceWithEnvironment
     {
         /// <summary>
-        /// Configures the proxy environment variables and restart the target resource.
+        /// Sets the environment variables for DevProxy and restarts the resource when the linked DevProxy resource is started or stopped.
         /// </summary>
-        /// <typeparam name="TApi">The type of the API resource</typeparam>
-        /// <param name="apiResource">The API resource builder to proxy</param>
-        /// <param name="proxyUrl">The proxy URL. If null, uses the Dev Proxy endpoint from the builder resource.</param>
-        /// <returns>The Dev Proxy resource builder for chaining</returns>
-        public IResourceBuilder<T> WithProxy<TApi>(
-            IResourceBuilder<TApi> apiResource,
-            string? proxyUrl = null) where TApi : IResourceWithEnvironment
+        /// <typeparam name="TApi">The type of the resource</typeparam>
+        /// <param name="devProxyResource">The DevProxy resource to track</param>
+        /// <returns>The resource that is restarted</returns>
+        public IResourceBuilder<T> WithDevProxy<TApi>(
+            IResourceBuilder<TApi> devProxyResource) where TApi : IResource, IResourceWithEndpoints
         {
-            
-
-            builder.OnResourceReady(async (resource, evt, cancellationToken) =>
+            devProxyResource = devProxyResource ?? throw new ArgumentNullException(nameof(devProxyResource));
+            if(devProxyResource.Resource is not DevProxyContainerResource)
             {
-                var url = proxyUrl ?? builder.GetEndpoint(DevProxyResource.ProxyEndpointName).Url;
-                apiResource
+                throw new ArgumentException("The provided resource is not a DevProxyContainerResource.", nameof(devProxyResource));
+            }
+
+            _ = devProxyResource.OnResourceReady(async (resource, evt, cancellationToken) =>
+            {
+                var logger = evt.Services
+                    .GetRequiredService<ResourceLoggerService>()
+                    .GetLogger(builder.Resource);
+
+                if (logger.IsEnabled(LogLevel.Information))
+                {
+                    logger.LogInformation("{DevProxyResourceName} is ready. Restarting {BuilderResourceName} to apply settings...",
+                        devProxyResource.Resource.Name, builder.Resource.Name);
+                }
+
+                var url = devProxyResource.GetEndpoint(DevProxyResource.ProxyEndpointName).Url;
+                builder
                     .WithEnvironment("HTTP_PROXY", url)
                     .WithEnvironment("HTTPS_PROXY", url);
-                
-                var logger = evt.Services.GetRequiredService<ILogger<Program>>();
-                logger.LogInformation("Dev Proxy is ready. Restarting API to apply proxy settings...");
 
-                // Use ResourceCommandService to execute the restart command on the API resource
                 var commandService = evt.Services.GetRequiredService<ResourceCommandService>();
 
                 var result = await commandService.ExecuteCommandAsync(
-                    apiResource.Resource, 
-                    KnownResourceCommands.RestartCommand, 
-                    cancellationToken);
-
-                if (result.Success)
-                {
-                    logger.LogInformation("API resource restarted successfully.");
-                }
-                else
-                {
-                    logger.LogWarning("Failed to restart API resource: {ErrorMessage}", result.ErrorMessage);
-                }
-            });
-            
-            builder.OnResourceStopped(async (resource, evt, cancellationToken) =>
-            {
-                apiResource
-                    .WithEnvironment("HTTP_PROXY", string.Empty)
-                    .WithEnvironment("HTTPS_PROXY", string.Empty);
-
-                var logger = evt.Services.GetRequiredService<ILogger<Program>>();
-                logger.LogInformation("Dev Proxy is stopped. Restarting API to restart proxy settings...");
-
-                // Use ResourceCommandService to execute the restart command on the API resource
-                var commandService = evt.Services.GetRequiredService<ResourceCommandService>();
-
-                var result = await commandService.ExecuteCommandAsync(
-                    apiResource.Resource,
+                    builder.Resource,
                     KnownResourceCommands.RestartCommand,
                     cancellationToken);
 
-                if (result.Success)
+                if (logger.IsEnabled(LogLevel.Information) && result.Success)
                 {
-                    logger.LogInformation("API resource restarted successfully.");
+                    logger.LogInformation("{BuilderResourceName} resource restarted successfully.", builder.Resource.Name);
                 }
-                else
+                else if (!result.Success && logger.IsEnabled(LogLevel.Warning))
                 {
-                    logger.LogWarning("Failed to restart API resource: {ErrorMessage}", result.ErrorMessage);
+                    logger.LogWarning("Failed to restart {BuilderResourceName} resource: {ErrorMessage}", builder.Resource.Name, result.ErrorMessage);
+                }
+            });
+
+            devProxyResource.OnResourceStopped(async (resource, evt, cancellationToken) =>
+            {
+                var logger = evt.Services
+                    .GetRequiredService<ResourceLoggerService>()
+                    .GetLogger(builder.Resource);
+
+                builder
+                    .WithEnvironment("HTTP_PROXY", string.Empty)
+                    .WithEnvironment("HTTPS_PROXY", string.Empty);
+
+                if (logger.IsEnabled(LogLevel.Information))
+                {
+                    logger.LogInformation("{DevProxyResourceName} is stopped. Restarting {BuilderResourceName} to restart proxy settings...",
+                        devProxyResource.Resource.Name, builder.Resource.Name);
+                }
+
+                var commandService = evt.Services.GetRequiredService<ResourceCommandService>();
+
+                var result = await commandService.ExecuteCommandAsync(
+                    builder.Resource,
+                    KnownResourceCommands.RestartCommand,
+                    cancellationToken);
+
+                if (logger.IsEnabled(LogLevel.Information) && result.Success)
+                {
+                    logger.LogInformation("{BuilderResourceName} resource restarted successfully.", builder.Resource.Name);
+                }
+                else if (!result.Success && logger.IsEnabled(LogLevel.Warning))
+                {
+                    logger.LogWarning("Failed to restart {BuilderResourceName} resource: {ErrorMessage}", builder.Resource.Name, result.ErrorMessage);
                 }
             });
 
             return builder;
         }
-        
-
     }
 }
