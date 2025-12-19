@@ -1,0 +1,1291 @@
+{
+  "settings": {
+    "components": {
+      "code": false,
+      "binaries": false
+    },
+    "targetId": "net10.0",
+    "targetDisplayName": ".NETCoreApp,Version=v10.0"
+  },
+  "analysisStartTime": "2025-12-19T22:24:06.8579214Z",
+  "analysisEndTime": "2025-12-19T22:24:12.1407589Z",
+  "privacyModeHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2270980",
+  "stats": {
+    "summary": {
+      "projects": 1,
+      "issues": 6,
+      "incidents": 47,
+      "effort": 47
+    },
+    "charts": {
+      "severity": {
+        "Mandatory": 15,
+        "Optional": 0,
+        "Potential": 32,
+        "Information": 0
+      },
+      "category": {
+        "NuGet": 6,
+        "Project": 1,
+        "Api": 40
+      }
+    }
+  },
+  "projects": [
+    {
+      "path": "server\\DartsStats.Api.csproj",
+      "startingProject": true,
+      "issues": 5,
+      "storyPoints": 47,
+      "properties": {
+        "appName": "DartsStats.Api",
+        "projectKind": "AspNetCore",
+        "frameworks": [
+          "net9.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 17,
+        "numberOfCodeFiles": 15,
+        "linesTotal": 2232,
+        "linesOfCode": 2189,
+        "totalApiScanned": 6580,
+        "minLinesOfCodeToChange": 40,
+        "maxLinesOfCodeToChange": 40
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "16cb6385-b59f-42cc-a131-a58d40db8245",
+          "ruleId": "NuGet.0002",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.AspNetCore.Authentication.JwtBearer, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.Authentication.JwtBearer, and replace with new package Microsoft.AspNetCore.Authentication.JwtBearer 10.0.1",
+              "protected": "Microsoft.AspNetCore.Authentication.JwtBearer, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.Authentication.JwtBearer, and replace with new package Microsoft.AspNetCore.Authentication.JwtBearer 10.0.1"
+            },
+            "kind": "File",
+            "path": "server\\DartsStats.Api.csproj",
+            "snippet": "Microsoft.AspNetCore.Authentication.JwtBearer, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.Authentication.JwtBearer, and replace with new package Microsoft.AspNetCore.Authentication.JwtBearer 10.0.1",
+            "protectedSnippet": "Microsoft.AspNetCore.Authentication.JwtBearer, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.Authentication.JwtBearer, and replace with new package Microsoft.AspNetCore.Authentication.JwtBearer 10.0.1",
+            "label": "Microsoft.AspNetCore.Authentication.JwtBearer 9.0.10",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageVersion": "9.0.10",
+              "PackageNewVersion": "10.0.1",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "fcf44ed5-5946-48e4-ac36-a306ce857aa8",
+          "ruleId": "NuGet.0002",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.AspNetCore.OpenApi, 9.0.7\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.OpenApi, and replace with new package Microsoft.AspNetCore.OpenApi 10.0.1",
+              "protected": "Microsoft.AspNetCore.OpenApi, 9.0.7\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.OpenApi, and replace with new package Microsoft.AspNetCore.OpenApi 10.0.1"
+            },
+            "kind": "File",
+            "path": "server\\DartsStats.Api.csproj",
+            "snippet": "Microsoft.AspNetCore.OpenApi, 9.0.7\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.OpenApi, and replace with new package Microsoft.AspNetCore.OpenApi 10.0.1",
+            "protectedSnippet": "Microsoft.AspNetCore.OpenApi, 9.0.7\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.OpenApi, and replace with new package Microsoft.AspNetCore.OpenApi 10.0.1",
+            "label": "Microsoft.AspNetCore.OpenApi 9.0.7",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.OpenApi",
+              "PackageVersion": "9.0.7",
+              "PackageNewVersion": "10.0.1",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "117d842d-1fa5-41cc-9888-06d2226c4afc",
+          "ruleId": "NuGet.0002",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.EntityFrameworkCore.SqlServer, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.SqlServer, and replace with new package Microsoft.EntityFrameworkCore.SqlServer 10.0.1",
+              "protected": "Microsoft.EntityFrameworkCore.SqlServer, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.SqlServer, and replace with new package Microsoft.EntityFrameworkCore.SqlServer 10.0.1"
+            },
+            "kind": "File",
+            "path": "server\\DartsStats.Api.csproj",
+            "snippet": "Microsoft.EntityFrameworkCore.SqlServer, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.SqlServer, and replace with new package Microsoft.EntityFrameworkCore.SqlServer 10.0.1",
+            "protectedSnippet": "Microsoft.EntityFrameworkCore.SqlServer, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.SqlServer, and replace with new package Microsoft.EntityFrameworkCore.SqlServer 10.0.1",
+            "label": "Microsoft.EntityFrameworkCore.SqlServer 9.0.10",
+            "properties": {
+              "PackageId": "Microsoft.EntityFrameworkCore.SqlServer",
+              "PackageVersion": "9.0.10",
+              "PackageNewVersion": "10.0.1",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "1033abf5-9787-4c9a-9d64-b5cce77a3d61",
+          "ruleId": "NuGet.0002",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.EntityFrameworkCore.Tools, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Tools, and replace with new package Microsoft.EntityFrameworkCore.Tools 10.0.1",
+              "protected": "Microsoft.EntityFrameworkCore.Tools, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Tools, and replace with new package Microsoft.EntityFrameworkCore.Tools 10.0.1"
+            },
+            "kind": "File",
+            "path": "server\\DartsStats.Api.csproj",
+            "snippet": "Microsoft.EntityFrameworkCore.Tools, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Tools, and replace with new package Microsoft.EntityFrameworkCore.Tools 10.0.1",
+            "protectedSnippet": "Microsoft.EntityFrameworkCore.Tools, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Tools, and replace with new package Microsoft.EntityFrameworkCore.Tools 10.0.1",
+            "label": "Microsoft.EntityFrameworkCore.Tools 9.0.10",
+            "properties": {
+              "PackageId": "Microsoft.EntityFrameworkCore.Tools",
+              "PackageVersion": "9.0.10",
+              "PackageNewVersion": "10.0.1",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "51e497f5-67cf-43e8-a3f2-5a8fc6e83639",
+          "ruleId": "NuGet.0002",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.EntityFrameworkCore.Design, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.1",
+              "protected": "Microsoft.EntityFrameworkCore.Design, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.1"
+            },
+            "kind": "File",
+            "path": "server\\DartsStats.Api.csproj",
+            "snippet": "Microsoft.EntityFrameworkCore.Design, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.1",
+            "protectedSnippet": "Microsoft.EntityFrameworkCore.Design, 9.0.10\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.1",
+            "label": "Microsoft.EntityFrameworkCore.Design 9.0.10",
+            "properties": {
+              "PackageId": "Microsoft.EntityFrameworkCore.Design",
+              "PackageVersion": "9.0.10",
+              "PackageNewVersion": "10.0.1",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "c17487c0-c0ed-4cfc-92e3-33939a25fc28",
+          "ruleId": "NuGet.0002",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.Caching.StackExchangeRedis, 9.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Caching.StackExchangeRedis, and replace with new package Microsoft.Extensions.Caching.StackExchangeRedis 10.0.1",
+              "protected": "Microsoft.Extensions.Caching.StackExchangeRedis, 9.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Caching.StackExchangeRedis, and replace with new package Microsoft.Extensions.Caching.StackExchangeRedis 10.0.1"
+            },
+            "kind": "File",
+            "path": "server\\DartsStats.Api.csproj",
+            "snippet": "Microsoft.Extensions.Caching.StackExchangeRedis, 9.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Caching.StackExchangeRedis, and replace with new package Microsoft.Extensions.Caching.StackExchangeRedis 10.0.1",
+            "protectedSnippet": "Microsoft.Extensions.Caching.StackExchangeRedis, 9.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Caching.StackExchangeRedis, and replace with new package Microsoft.Extensions.Caching.StackExchangeRedis 10.0.1",
+            "label": "Microsoft.Extensions.Caching.StackExchangeRedis 9.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.Caching.StackExchangeRedis",
+              "PackageVersion": "9.0.0",
+              "PackageNewVersion": "10.0.1",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "fde3f13d-a8ef-4944-b765-bb6be72836ed",
+          "ruleId": "Project.0002",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net9.0\nRecommended target framework: net10.0",
+              "protected": "Current target framework: net9.0\nRecommended target framework: net10.0"
+            },
+            "kind": "File",
+            "path": "server\\DartsStats.Api.csproj",
+            "snippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "protectedSnippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net9.0",
+              "RecommendedTargetFramework": "net10.0"
+            }
+          }
+        },
+        {
+          "incidentId": "6c3366a3-6119-4779-be9f-d930ab2cf325",
+          "ruleId": "Api.0003",
+          "description": "Breaking change - Streaming HTTP responses enabled by default in browser HTTP clients ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var jsonContent = await response.Content.ReadAsStringAsync();",
+              "protected": "T:System.Net.Http.HttpContent"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\VenuesController.cs",
+            "snippet": "var jsonContent = await response.Content.ReadAsStringAsync();",
+            "protectedSnippet": "T:System.Net.Http.HttpContent",
+            "label": "T:System.Net.Http.HttpContent",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/10.0/default-http-streaming.md",
+                "isCustom": false
+              }
+            ],
+            "line": 282,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "5e51d7de-8b18-4e22-bc86-a9b7e6dea410",
+          "ruleId": "Api.0003",
+          "description": "Breaking change: URI length limits removed ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var fallbackUrl = $\u0022https://en.wikipedia.org/w/api.php?action=query\u0026format=json\u0026prop=extracts|pageimages\u0026exintro=1\u0026explaintext=1\u0026piprop=thumbnail\u0026pithumbsize=400\u0026titles={Uri.EscapeDataString(venueName)}\u0022;",
+              "protected": "T:System.Uri"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\VenuesController.cs",
+            "snippet": "var fallbackUrl = $\u0022https://en.wikipedia.org/w/api.php?action=query\u0026format=json\u0026prop=extracts|pageimages\u0026exintro=1\u0026explaintext=1\u0026piprop=thumbnail\u0026pithumbsize=400\u0026titles={Uri.EscapeDataString(venueName)}\u0022;",
+            "protectedSnippet": "T:System.Uri",
+            "label": "T:System.Uri",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/10.0/uri-length-limits-removed.md",
+                "isCustom": false
+              }
+            ],
+            "line": 276,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "fa7bc6ea-4d84-4927-88fe-28ba2c923b5f",
+          "ruleId": "Api.0003",
+          "description": "Breaking change - Streaming HTTP responses enabled by default in browser HTTP clients ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var jsonContent = await response.Content.ReadAsStringAsync();",
+              "protected": "T:System.Net.Http.HttpContent"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\VenuesController.cs",
+            "snippet": "var jsonContent = await response.Content.ReadAsStringAsync();",
+            "protectedSnippet": "T:System.Net.Http.HttpContent",
+            "label": "T:System.Net.Http.HttpContent",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/10.0/default-http-streaming.md",
+                "isCustom": false
+              }
+            ],
+            "line": 183,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "9851846c-2096-4764-b782-88d735290d79",
+          "ruleId": "Api.0003",
+          "description": "Breaking change: URI length limits removed ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var wikipediaUrl = $\u0022https://en.wikipedia.org/api/rest_v1/page/summary/{Uri.EscapeDataString(venueName)}\u0022;",
+              "protected": "T:System.Uri"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\VenuesController.cs",
+            "snippet": "var wikipediaUrl = $\u0022https://en.wikipedia.org/api/rest_v1/page/summary/{Uri.EscapeDataString(venueName)}\u0022;",
+            "protectedSnippet": "T:System.Uri",
+            "label": "T:System.Uri",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/10.0/uri-length-limits-removed.md",
+                "isCustom": false
+              }
+            ],
+            "line": 173,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "178aa4a2-0841-4d22-a093-36c0ad14f017",
+          "ruleId": "Api.0002",
+          "description": "Breaking change: New TimeSpan.From*() overloads that take integers ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "await _cacheService.SetAsync(cacheKey, venueInfo, TimeSpan.FromHours(cacheExpirationHours));",
+              "protected": "M:System.TimeSpan.FromHours(System.Int32)"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\VenuesController.cs",
+            "snippet": "await _cacheService.SetAsync(cacheKey, venueInfo, TimeSpan.FromHours(cacheExpirationHours));",
+            "protectedSnippet": "M:System.TimeSpan.FromHours(System.Int32)",
+            "label": "M:System.TimeSpan.FromHours(System.Int32)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/core-libraries/9.0/timespan-from-overloads.md",
+                "isCustom": false
+              }
+            ],
+            "line": 75,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "25ce77fa-d6f3-40ec-928f-e3c66b677326",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "private static List\u003Cstring\u003E ExtractRolesFromToken(System.IdentityModel.Tokens.Jwt.JwtSecurityToken jwtToken)",
+              "protected": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityToken"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "private static List\u003Cstring\u003E ExtractRolesFromToken(System.IdentityModel.Tokens.Jwt.JwtSecurityToken jwtToken)",
+            "protectedSnippet": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityToken",
+            "label": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityToken",
+            "line": 230,
+            "column": 8
+          }
+        },
+        {
+          "incidentId": "8c30d264-6912-4389-802b-219ce9d13d85",
+          "ruleId": "Api.0003",
+          "description": "Nullable JsonDocument properties deserialize to JsonValueKind.Null ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "using var doc = JsonDocument.Parse(resourceAccessClaim.Value);",
+              "protected": "T:System.Text.Json.JsonDocument"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "using var doc = JsonDocument.Parse(resourceAccessClaim.Value);",
+            "protectedSnippet": "T:System.Text.Json.JsonDocument",
+            "label": "T:System.Text.Json.JsonDocument",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/serialization/9.0/jsondocument-props.md",
+                "isCustom": false
+              }
+            ],
+            "line": 270,
+            "column": 20
+          }
+        },
+        {
+          "incidentId": "8affb7b7-044e-410f-8286-88886eba9a81",
+          "ruleId": "Api.0003",
+          "description": "Nullable JsonDocument properties deserialize to JsonValueKind.Null ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "using var doc = JsonDocument.Parse(resourceAccessClaim.Value);",
+              "protected": "T:System.Text.Json.JsonDocument"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "using var doc = JsonDocument.Parse(resourceAccessClaim.Value);",
+            "protectedSnippet": "T:System.Text.Json.JsonDocument",
+            "label": "T:System.Text.Json.JsonDocument",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/serialization/9.0/jsondocument-props.md",
+                "isCustom": false
+              }
+            ],
+            "line": 270,
+            "column": 20
+          }
+        },
+        {
+          "incidentId": "d2592ce4-a23a-470d-b571-a40085a773ea",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var resourceAccessClaim = jwtToken.Claims.FirstOrDefault(c =\u003E c.Type == \u0022resource_access\u0022);",
+              "protected": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var resourceAccessClaim = jwtToken.Claims.FirstOrDefault(c =\u003E c.Type == \u0022resource_access\u0022);",
+            "protectedSnippet": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims",
+            "label": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims",
+            "line": 265,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "5638d1b3-b97f-4076-9ae5-ba9258987892",
+          "ruleId": "Api.0003",
+          "description": "Nullable JsonDocument properties deserialize to JsonValueKind.Null ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "using var doc = JsonDocument.Parse(realmAccessClaim.Value);",
+              "protected": "T:System.Text.Json.JsonDocument"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "using var doc = JsonDocument.Parse(realmAccessClaim.Value);",
+            "protectedSnippet": "T:System.Text.Json.JsonDocument",
+            "label": "T:System.Text.Json.JsonDocument",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/serialization/9.0/jsondocument-props.md",
+                "isCustom": false
+              }
+            ],
+            "line": 244,
+            "column": 20
+          }
+        },
+        {
+          "incidentId": "9ff3b3e3-1a45-4cb2-a963-e3c2fda79d42",
+          "ruleId": "Api.0003",
+          "description": "Nullable JsonDocument properties deserialize to JsonValueKind.Null ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "using var doc = JsonDocument.Parse(realmAccessClaim.Value);",
+              "protected": "T:System.Text.Json.JsonDocument"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "using var doc = JsonDocument.Parse(realmAccessClaim.Value);",
+            "protectedSnippet": "T:System.Text.Json.JsonDocument",
+            "label": "T:System.Text.Json.JsonDocument",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/serialization/9.0/jsondocument-props.md",
+                "isCustom": false
+              }
+            ],
+            "line": 244,
+            "column": 20
+          }
+        },
+        {
+          "incidentId": "7d097516-5c39-4b1a-98c1-f01714c691aa",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var realmAccessClaim = jwtToken.Claims.FirstOrDefault(c =\u003E c.Type == \u0022realm_access\u0022);",
+              "protected": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var realmAccessClaim = jwtToken.Claims.FirstOrDefault(c =\u003E c.Type == \u0022realm_access\u0022);",
+            "protectedSnippet": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims",
+            "label": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims",
+            "line": 239,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "b38b9c13-9473-4b65-9084-2b65a2389e48",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var rolesClaims = jwtToken.Claims.Where(c =\u003E c.Type == \u0022roles\u0022).Select(c =\u003E c.Value);",
+              "protected": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var rolesClaims = jwtToken.Claims.Where(c =\u003E c.Type == \u0022roles\u0022).Select(c =\u003E c.Value);",
+            "protectedSnippet": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims",
+            "label": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims",
+            "line": 235,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "35745094-0e45-49fd-b8d8-1d1a13bdb850",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var username = jwtToken.Claims.FirstOrDefault(c =\u003E c.Type == \u0022preferred_username\u0022)?.Value ?? \u0022\u0022;",
+              "protected": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var username = jwtToken.Claims.FirstOrDefault(c =\u003E c.Type == \u0022preferred_username\u0022)?.Value ?? \u0022\u0022;",
+            "protectedSnippet": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims",
+            "label": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims",
+            "line": 204,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "3107146a-8b81-49a9-a6c2-4c5684b5e67e",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var jwtToken = handler.ReadJwtToken(tokenData.AccessToken);",
+              "protected": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityToken"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var jwtToken = handler.ReadJwtToken(tokenData.AccessToken);",
+            "protectedSnippet": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityToken",
+            "label": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityToken",
+            "line": 202,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "e444bac2-a25d-4f51-9bfd-6d3a6d86d5e6",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var jwtToken = handler.ReadJwtToken(tokenData.AccessToken);",
+              "protected": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ReadJwtToken(System.String)"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var jwtToken = handler.ReadJwtToken(tokenData.AccessToken);",
+            "protectedSnippet": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ReadJwtToken(System.String)",
+            "label": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ReadJwtToken(System.String)",
+            "line": 202,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "40aec159-cdda-42a3-9ac8-3f44f09d204c",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();",
+              "protected": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();",
+            "protectedSnippet": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler",
+            "label": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler",
+            "line": 201,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "a9307c99-b215-4809-a9ce-74afc69d3242",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();",
+              "protected": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.#ctor"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();",
+            "protectedSnippet": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.#ctor",
+            "label": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.#ctor",
+            "line": 201,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "ffb2a2b8-987a-4ed5-baa8-0bfbd16f8269",
+          "ruleId": "Api.0003",
+          "description": "Breaking change - Streaming HTTP responses enabled by default in browser HTTP clients ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var tokenResponse = await response.Content.ReadAsStringAsync();",
+              "protected": "T:System.Net.Http.HttpContent"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var tokenResponse = await response.Content.ReadAsStringAsync();",
+            "protectedSnippet": "T:System.Net.Http.HttpContent",
+            "label": "T:System.Net.Http.HttpContent",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/10.0/default-http-streaming.md",
+                "isCustom": false
+              }
+            ],
+            "line": 193,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "589b2527-74ac-47ea-9ba3-060f1fe215fd",
+          "ruleId": "Api.0003",
+          "description": "Breaking change: URI length limits removed ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var usernameParam = Uri.EscapeDataString(username);",
+              "protected": "T:System.Uri"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var usernameParam = Uri.EscapeDataString(username);",
+            "protectedSnippet": "T:System.Uri",
+            "label": "T:System.Uri",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/10.0/uri-length-limits-removed.md",
+                "isCustom": false
+              }
+            ],
+            "line": 127,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "368dd1f3-cf07-4735-bb99-92d413e7670a",
+          "ruleId": "Api.0003",
+          "description": "Breaking change: URI length limits removed ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var refreshTokenParam = Uri.EscapeDataString(tokenData.RefreshToken ?? \u0022\u0022);",
+              "protected": "T:System.Uri"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var refreshTokenParam = Uri.EscapeDataString(tokenData.RefreshToken ?? \u0022\u0022);",
+            "protectedSnippet": "T:System.Uri",
+            "label": "T:System.Uri",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/10.0/uri-length-limits-removed.md",
+                "isCustom": false
+              }
+            ],
+            "line": 126,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "469c9ba3-e81f-4128-8136-628706b838d5",
+          "ruleId": "Api.0003",
+          "description": "Breaking change: URI length limits removed ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var tokenParam = Uri.EscapeDataString(tokenData.AccessToken);",
+              "protected": "T:System.Uri"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var tokenParam = Uri.EscapeDataString(tokenData.AccessToken);",
+            "protectedSnippet": "T:System.Uri",
+            "label": "T:System.Uri",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/10.0/uri-length-limits-removed.md",
+                "isCustom": false
+              }
+            ],
+            "line": 125,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "9bd1b903-37e9-4b1e-a7c6-4323fc5485d2",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var username = jwtToken.Claims.FirstOrDefault(c =\u003E c.Type == \u0022preferred_username\u0022)?.Value ?? \u0022unknown\u0022;",
+              "protected": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var username = jwtToken.Claims.FirstOrDefault(c =\u003E c.Type == \u0022preferred_username\u0022)?.Value ?? \u0022unknown\u0022;",
+            "protectedSnippet": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims",
+            "label": "P:System.IdentityModel.Tokens.Jwt.JwtSecurityToken.Claims",
+            "line": 115,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "8f440ded-e454-404b-94d3-90a27fcfc039",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var jwtToken = handler.ReadJwtToken(tokenData.AccessToken);",
+              "protected": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityToken"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var jwtToken = handler.ReadJwtToken(tokenData.AccessToken);",
+            "protectedSnippet": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityToken",
+            "label": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityToken",
+            "line": 113,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "2dc9cf1f-559b-4117-be3f-aedd7ec6b6a0",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var jwtToken = handler.ReadJwtToken(tokenData.AccessToken);",
+              "protected": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ReadJwtToken(System.String)"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var jwtToken = handler.ReadJwtToken(tokenData.AccessToken);",
+            "protectedSnippet": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ReadJwtToken(System.String)",
+            "label": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ReadJwtToken(System.String)",
+            "line": 113,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "1d8aa728-7d67-410d-a086-a3615dbdc25f",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();",
+              "protected": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();",
+            "protectedSnippet": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler",
+            "label": "T:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler",
+            "line": 112,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "b29f0c37-0622-40ef-a37c-c4eb76d40053",
+          "ruleId": "Api.0001",
+          "description": "API is unavailable in net8.0 ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();",
+              "protected": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.#ctor"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();",
+            "protectedSnippet": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.#ctor",
+            "label": "M:System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.#ctor",
+            "line": 112,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "a09a7517-454b-4d39-a9fa-f19273402333",
+          "ruleId": "Api.0003",
+          "description": "Breaking change - Streaming HTTP responses enabled by default in browser HTTP clients ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var tokenResponse = await response.Content.ReadAsStringAsync();",
+              "protected": "T:System.Net.Http.HttpContent"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var tokenResponse = await response.Content.ReadAsStringAsync();",
+            "protectedSnippet": "T:System.Net.Http.HttpContent",
+            "label": "T:System.Net.Http.HttpContent",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/10.0/default-http-streaming.md",
+                "isCustom": false
+              }
+            ],
+            "line": 102,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "b7cd6dad-731a-4f92-9d57-f12f438e0d50",
+          "ruleId": "Api.0003",
+          "description": "Breaking change - Streaming HTTP responses enabled by default in browser HTTP clients ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var errorContent = await response.Content.ReadAsStringAsync();",
+              "protected": "T:System.Net.Http.HttpContent"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var errorContent = await response.Content.ReadAsStringAsync();",
+            "protectedSnippet": "T:System.Net.Http.HttpContent",
+            "label": "T:System.Net.Http.HttpContent",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/10.0/default-http-streaming.md",
+                "isCustom": false
+              }
+            ],
+            "line": 97,
+            "column": 20
+          }
+        },
+        {
+          "incidentId": "69eafe09-b27c-42ae-9042-6d1c38c4feb9",
+          "ruleId": "Api.0003",
+          "description": "Breaking change: URI length limits removed ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var query = string.Join(\u0022\u0026\u0022, queryParams.Select(kvp =\u003E $\u0022{kvp.Key}={Uri.EscapeDataString(kvp.Value)}\u0022));",
+              "protected": "T:System.Uri"
+            },
+            "kind": "File",
+            "path": "server\\Controllers\\AuthController.cs",
+            "snippet": "var query = string.Join(\u0022\u0026\u0022, queryParams.Select(kvp =\u003E $\u0022{kvp.Key}={Uri.EscapeDataString(kvp.Value)}\u0022));",
+            "protectedSnippet": "T:System.Uri",
+            "label": "T:System.Uri",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/10.0/uri-length-limits-removed.md",
+                "isCustom": false
+              }
+            ],
+            "line": 53,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "676d76b1-2b3c-40c0-9f75-f60470315f4a",
+          "ruleId": "Api.0002",
+          "description": "Breaking change: New TimeSpan.From*() overloads that take integers ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "options.SetAbsoluteExpiration(TimeSpan.FromHours(1));",
+              "protected": "M:System.TimeSpan.FromHours(System.Int32)"
+            },
+            "kind": "File",
+            "path": "server\\Services\\RedisCacheService.cs",
+            "snippet": "options.SetAbsoluteExpiration(TimeSpan.FromHours(1));",
+            "protectedSnippet": "M:System.TimeSpan.FromHours(System.Int32)",
+            "label": "M:System.TimeSpan.FromHours(System.Int32)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/core-libraries/9.0/timespan-from-overloads.md",
+                "isCustom": false
+              }
+            ],
+            "line": 41,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "bc4bc1e4-d481-4a99-ac40-c84d964e3548",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "options.TokenValidationParameters = new TokenValidationParameters\r\n        {\r\n            ValidateIssuer = true,\r\n            ValidateAudience = true,\r\n            ValidateLifetime = true,\r\n            ValidateIssuerSigningKey = true,\r\n            ValidAudience = keycloakAudience,\r\n            ValidIssuer = keycloakAuthority,\r\n            ClockSkew = TimeSpan.Zero\r\n        };",
+              "protected": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.TokenValidationParameters"
+            },
+            "kind": "File",
+            "path": "server\\Program.cs",
+            "snippet": "options.TokenValidationParameters = new TokenValidationParameters\r\n        {\r\n            ValidateIssuer = true,\r\n            ValidateAudience = true,\r\n            ValidateLifetime = true,\r\n            ValidateIssuerSigningKey = true,\r\n            ValidAudience = keycloakAudience,\r\n            ValidIssuer = keycloakAuthority,\r\n            ClockSkew = TimeSpan.Zero\r\n        };",
+            "protectedSnippet": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.TokenValidationParameters",
+            "label": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.TokenValidationParameters",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 48,
+            "column": 8
+          }
+        },
+        {
+          "incidentId": "a6385b02-dbaf-49d0-a70b-f965600016aa",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();",
+              "protected": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.RequireHttpsMetadata"
+            },
+            "kind": "File",
+            "path": "server\\Program.cs",
+            "snippet": "options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();",
+            "protectedSnippet": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.RequireHttpsMetadata",
+            "label": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.RequireHttpsMetadata",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 46,
+            "column": 8
+          }
+        },
+        {
+          "incidentId": "8fd53784-d7f4-4709-b042-14f028bd06f0",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "options.Audience = keycloakAudience;",
+              "protected": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.Audience"
+            },
+            "kind": "File",
+            "path": "server\\Program.cs",
+            "snippet": "options.Audience = keycloakAudience;",
+            "protectedSnippet": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.Audience",
+            "label": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.Audience",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 45,
+            "column": 8
+          }
+        },
+        {
+          "incidentId": "3c9c46b7-11c9-47d8-8c3a-eadf8772ee9b",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "options.Authority = keycloakAuthority;",
+              "protected": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.Authority"
+            },
+            "kind": "File",
+            "path": "server\\Program.cs",
+            "snippet": "options.Authority = keycloakAuthority;",
+            "protectedSnippet": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.Authority",
+            "label": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.Authority",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 44,
+            "column": 8
+          }
+        },
+        {
+          "incidentId": "98cc3ad9-4688-4ddf-a2f0-7a933bef43c6",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddJwtBearer(options =\u003E\r\n    {\r\n        var keycloakAuthority = builder.Configuration[\u0022Keycloak:Authority\u0022];\r\n        var keycloakAudience = builder.Configuration[\u0022Keycloak:Audience\u0022];\r\n\r\n        options.Authority = keycloakAuthority;\r\n        options.Audience = keycloakAudience;\r\n        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();\r\n        \r\n        options.TokenValidationParameters = new TokenValidationParameters\r\n        {\r\n            ValidateIssuer = true,\r\n            ValidateAudience = true,\r\n            ValidateLifetime = true,\r\n            ValidateIssuerSigningKey = true,\r\n            ValidAudience = keycloakAudience,\r\n            ValidIssuer = keycloakAuthority,\r\n            ClockSkew = TimeSpan.Zero\r\n        };\r\n    });",
+              "protected": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults"
+            },
+            "kind": "File",
+            "path": "server\\Program.cs",
+            "snippet": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddJwtBearer(options =\u003E\r\n    {\r\n        var keycloakAuthority = builder.Configuration[\u0022Keycloak:Authority\u0022];\r\n        var keycloakAudience = builder.Configuration[\u0022Keycloak:Audience\u0022];\r\n\r\n        options.Authority = keycloakAuthority;\r\n        options.Audience = keycloakAudience;\r\n        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();\r\n        \r\n        options.TokenValidationParameters = new TokenValidationParameters\r\n        {\r\n            ValidateIssuer = true,\r\n            ValidateAudience = true,\r\n            ValidateLifetime = true,\r\n            ValidateIssuerSigningKey = true,\r\n            ValidAudience = keycloakAudience,\r\n            ValidIssuer = keycloakAuthority,\r\n            ClockSkew = TimeSpan.Zero\r\n        };\r\n    });",
+            "protectedSnippet": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults",
+            "label": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 38,
+            "column": 0
+          }
+        },
+        {
+          "incidentId": "c0da75e6-893d-4ca4-89f0-5abada902bb4",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddJwtBearer(options =\u003E\r\n    {\r\n        var keycloakAuthority = builder.Configuration[\u0022Keycloak:Authority\u0022];\r\n        var keycloakAudience = builder.Configuration[\u0022Keycloak:Audience\u0022];\r\n\r\n        options.Authority = keycloakAuthority;\r\n        options.Audience = keycloakAudience;\r\n        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();\r\n        \r\n        options.TokenValidationParameters = new TokenValidationParameters\r\n        {\r\n            ValidateIssuer = true,\r\n            ValidateAudience = true,\r\n            ValidateLifetime = true,\r\n            ValidateIssuerSigningKey = true,\r\n            ValidAudience = keycloakAudience,\r\n            ValidIssuer = keycloakAuthority,\r\n            ClockSkew = TimeSpan.Zero\r\n        };\r\n    });",
+              "protected": "F:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme"
+            },
+            "kind": "File",
+            "path": "server\\Program.cs",
+            "snippet": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddJwtBearer(options =\u003E\r\n    {\r\n        var keycloakAuthority = builder.Configuration[\u0022Keycloak:Authority\u0022];\r\n        var keycloakAudience = builder.Configuration[\u0022Keycloak:Audience\u0022];\r\n\r\n        options.Authority = keycloakAuthority;\r\n        options.Audience = keycloakAudience;\r\n        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();\r\n        \r\n        options.TokenValidationParameters = new TokenValidationParameters\r\n        {\r\n            ValidateIssuer = true,\r\n            ValidateAudience = true,\r\n            ValidateLifetime = true,\r\n            ValidateIssuerSigningKey = true,\r\n            ValidAudience = keycloakAudience,\r\n            ValidIssuer = keycloakAuthority,\r\n            ClockSkew = TimeSpan.Zero\r\n        };\r\n    });",
+            "protectedSnippet": "F:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme",
+            "label": "F:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 38,
+            "column": 0
+          }
+        },
+        {
+          "incidentId": "4bf88df3-cba6-4578-9f89-c6cec12dd30a",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddJwtBearer(options =\u003E\r\n    {\r\n        var keycloakAuthority = builder.Configuration[\u0022Keycloak:Authority\u0022];\r\n        var keycloakAudience = builder.Configuration[\u0022Keycloak:Audience\u0022];\r\n\r\n        options.Authority = keycloakAuthority;\r\n        options.Audience = keycloakAudience;\r\n        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();\r\n        \r\n        options.TokenValidationParameters = new TokenValidationParameters\r\n        {\r\n            ValidateIssuer = true,\r\n            ValidateAudience = true,\r\n            ValidateLifetime = true,\r\n            ValidateIssuerSigningKey = true,\r\n            ValidAudience = keycloakAudience,\r\n            ValidIssuer = keycloakAuthority,\r\n            ClockSkew = TimeSpan.Zero\r\n        };\r\n    });",
+              "protected": "T:Microsoft.Extensions.DependencyInjection.JwtBearerExtensions"
+            },
+            "kind": "File",
+            "path": "server\\Program.cs",
+            "snippet": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddJwtBearer(options =\u003E\r\n    {\r\n        var keycloakAuthority = builder.Configuration[\u0022Keycloak:Authority\u0022];\r\n        var keycloakAudience = builder.Configuration[\u0022Keycloak:Audience\u0022];\r\n\r\n        options.Authority = keycloakAuthority;\r\n        options.Audience = keycloakAudience;\r\n        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();\r\n        \r\n        options.TokenValidationParameters = new TokenValidationParameters\r\n        {\r\n            ValidateIssuer = true,\r\n            ValidateAudience = true,\r\n            ValidateLifetime = true,\r\n            ValidateIssuerSigningKey = true,\r\n            ValidAudience = keycloakAudience,\r\n            ValidIssuer = keycloakAuthority,\r\n            ClockSkew = TimeSpan.Zero\r\n        };\r\n    });",
+            "protectedSnippet": "T:Microsoft.Extensions.DependencyInjection.JwtBearerExtensions",
+            "label": "T:Microsoft.Extensions.DependencyInjection.JwtBearerExtensions",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 38,
+            "column": 0
+          }
+        },
+        {
+          "incidentId": "70deeffe-f3ec-4bdf-9371-1f932df3dc72",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddJwtBearer(options =\u003E\r\n    {\r\n        var keycloakAuthority = builder.Configuration[\u0022Keycloak:Authority\u0022];\r\n        var keycloakAudience = builder.Configuration[\u0022Keycloak:Audience\u0022];\r\n\r\n        options.Authority = keycloakAuthority;\r\n        options.Audience = keycloakAudience;\r\n        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();\r\n        \r\n        options.TokenValidationParameters = new TokenValidationParameters\r\n        {\r\n            ValidateIssuer = true,\r\n            ValidateAudience = true,\r\n            ValidateLifetime = true,\r\n            ValidateIssuerSigningKey = true,\r\n            ValidAudience = keycloakAudience,\r\n            ValidIssuer = keycloakAuthority,\r\n            ClockSkew = TimeSpan.Zero\r\n        };\r\n    });",
+              "protected": "M:Microsoft.Extensions.DependencyInjection.JwtBearerExtensions.AddJwtBearer(Microsoft.AspNetCore.Authentication.AuthenticationBuilder,System.Action{Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions})"
+            },
+            "kind": "File",
+            "path": "server\\Program.cs",
+            "snippet": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddJwtBearer(options =\u003E\r\n    {\r\n        var keycloakAuthority = builder.Configuration[\u0022Keycloak:Authority\u0022];\r\n        var keycloakAudience = builder.Configuration[\u0022Keycloak:Audience\u0022];\r\n\r\n        options.Authority = keycloakAuthority;\r\n        options.Audience = keycloakAudience;\r\n        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();\r\n        \r\n        options.TokenValidationParameters = new TokenValidationParameters\r\n        {\r\n            ValidateIssuer = true,\r\n            ValidateAudience = true,\r\n            ValidateLifetime = true,\r\n            ValidateIssuerSigningKey = true,\r\n            ValidAudience = keycloakAudience,\r\n            ValidIssuer = keycloakAuthority,\r\n            ClockSkew = TimeSpan.Zero\r\n        };\r\n    });",
+            "protectedSnippet": "M:Microsoft.Extensions.DependencyInjection.JwtBearerExtensions.AddJwtBearer(Microsoft.AspNetCore.Authentication.AuthenticationBuilder,System.Action{Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions})",
+            "label": "M:Microsoft.Extensions.DependencyInjection.JwtBearerExtensions.AddJwtBearer(Microsoft.AspNetCore.Authentication.AuthenticationBuilder,System.Action{Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions})",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 38,
+            "column": 0
+          }
+        },
+        {
+          "incidentId": "0c413bcd-22e6-44ce-8021-87b707d795e8",
+          "ruleId": "Api.0003",
+          "description": "URI query redaction in IHttpClientFactory logs ",
+          "projectPath": "server\\DartsStats.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "builder.Services.AddHttpClient();",
+              "protected": "M:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.AddHttpClient(Microsoft.Extensions.DependencyInjection.IServiceCollection)"
+            },
+            "kind": "File",
+            "path": "server\\Program.cs",
+            "snippet": "builder.Services.AddHttpClient();",
+            "protectedSnippet": "M:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.AddHttpClient(Microsoft.Extensions.DependencyInjection.IServiceCollection)",
+            "label": "M:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.AddHttpClient(Microsoft.Extensions.DependencyInjection.IServiceCollection)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/networking/9.0/query-redaction-logs.md",
+                "isCustom": false
+              }
+            ],
+            "line": 35,
+            "column": 0
+          }
+        }
+      ],
+      "features": [
+        {
+          "featureId": "IdentityModel",
+          "incidents": [
+            "b29f0c37-0622-40ef-a37c-c4eb76d40053",
+            "1d8aa728-7d67-410d-a086-a3615dbdc25f",
+            "2dc9cf1f-559b-4117-be3f-aedd7ec6b6a0",
+            "8f440ded-e454-404b-94d3-90a27fcfc039",
+            "9bd1b903-37e9-4b1e-a7c6-4323fc5485d2",
+            "a9307c99-b215-4809-a9ce-74afc69d3242",
+            "40aec159-cdda-42a3-9ac8-3f44f09d204c",
+            "e444bac2-a25d-4f51-9bfd-6d3a6d86d5e6",
+            "3107146a-8b81-49a9-a6c2-4c5684b5e67e",
+            "35745094-0e45-49fd-b8d8-1d1a13bdb850",
+            "b38b9c13-9473-4b65-9084-2b65a2389e48",
+            "7d097516-5c39-4b1a-98c1-f01714c691aa",
+            "d2592ce4-a23a-470d-b571-a40085a773ea",
+            "25ce77fa-d6f3-40ec-928f-e3c66b677326"
+          ]
+        }
+      ]
+    }
+  ],
+  "rules": {
+    "NuGet.0002": {
+      "id": "NuGet.0002",
+      "isFeature": false,
+      "description": "NuGet package upgrade is recommended for selected target framework.\n\nStandard .NET packages are recommended to have versions matching version of .NET that project targets.\n\nSome other packages also are known to work better for selected target frameworks.",
+      "label": "NuGet package upgrade is recommended",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262530",
+          "isCustom": false
+        }
+      ]
+    },
+    "Project.0002": {
+      "id": "Project.0002",
+      "isFeature": false,
+      "description": "Project\u0027s target framework(s) needs to be changed to the new target framework that you selected for this upgrade.\n\nDuring upgrade target framework will be adjusted to corresponding platform when applicable. In some cases project would result in multiple target frameworks after the upgrade if it was using features that now have their own platforms in modern .NET frameworks (windows, iOS, Android etc).",
+      "label": "Project\u0027s target framework(s) needs to be changed",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Overview of porting from .NET Framework to .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265227",
+          "isCustom": false
+        },
+        {
+          "title": ".NET project SDKs",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265226",
+          "isCustom": false
+        }
+      ]
+    },
+    "Api.0003": {
+      "id": "Api.0003",
+      "isFeature": false,
+      "description": "API has a behavioral change in selected .NET version: code and binaries may behave differently at runtime without needing recompilation, but the new behavior might be undesirable and require updates.",
+      "label": "Behavioral change in selected .NET version",
+      "severity": "Potential",
+      "effort": 1
+    },
+    "Api.0002": {
+      "id": "Api.0002",
+      "isFeature": false,
+      "description": "API is source incompatible for selected .NET version: requires code changes to compile successfully when targeting a new version, such as removing obsolete APIs or changing method signatures.",
+      "label": "Source incompatible for selected .NET version",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Breaking changes in .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262679",
+          "isCustom": false
+        }
+      ]
+    },
+    "Api.0001": {
+      "id": "Api.0001",
+      "isFeature": false,
+      "description": "API is binary incompatible for selected .NET version: affects existing binaries, often requiring recompilation, because the API has changed in a way that prevents older binaries from loading or executing.",
+      "label": "Binary incompatible for selected .NET version",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Breaking changes in .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262679",
+          "isCustom": false
+        }
+      ]
+    },
+    "IdentityModel": {
+      "id": "IdentityModel",
+      "isFeature": false,
+      "description": "Windows Identity Foundation (WIF), SAML, and claims-based authentication APIs that have been replaced by modern identity libraries. WIF was the original identity framework for .NET Framework. Migrate to Microsoft.IdentityModel.* packages (modern identity stack).",
+      "label": "IdentityModel \u0026 Claims-based Security",
+      "severity": "Mandatory",
+      "effort": 4,
+      "links": [
+        {
+          "title": "Microsoft.IdentityModel packages",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2341614",
+          "isCustom": false
+        }
+      ]
+    }
+  }
+}
