@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DartsStats.Api.Models;
+using DartsStats.Api.DTOs;
 using DartsStats.Api.Data;
+using DartsStats.Api.Mappings;
 
 namespace DartsStats.Api.Controllers
 {
@@ -17,7 +18,7 @@ namespace DartsStats.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Match>>> GetMatches([FromQuery] string? season = null, [FromQuery] string? round = null)
+        public async Task<ActionResult<IEnumerable<MatchDto>>> GetMatches([FromQuery] string? season = null, [FromQuery] string? round = null)
         {
             var matches = _context.Matches.Include(m => m.Player1).Include(m => m.Player2).AsQueryable();
             
@@ -31,7 +32,8 @@ namespace DartsStats.Api.Controllers
                 matches = matches.Where(m => m.Round == round);
             }
             
-            return Ok(await matches.OrderBy(m => m.MatchDate).ToListAsync());
+            var matchList = await matches.OrderBy(m => m.MatchDate).ToListAsync();
+            return Ok(matchList.Select(m => m.ToDto()));
         }
 
         [HttpGet("rounds")]
@@ -54,14 +56,14 @@ namespace DartsStats.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Match>> GetMatch(int id)
+        public async Task<ActionResult<MatchDto>> GetMatch(int id)
         {
             var match = await _context.Matches.FindAsync(id);
             if (match == null)
             {
                 return NotFound();
             }
-            return Ok(match);
+            return Ok(match.ToDto());
         }
     }
 }

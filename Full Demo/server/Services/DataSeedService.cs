@@ -1,11 +1,13 @@
-using DartsStats.Api.Models;
+using DartsStats.Api.Entities;
+using DartsStats.Api.DTOs;
+using DartsStats.Api.Mappings;
 
 namespace DartsStats.Api.Services
 {
     public class DataSeedService
     {
-        private readonly List<Player> _players;
-        private readonly List<Match> _matches;
+        private readonly List<PlayerEntity> _players;
+        private readonly List<MatchEntity> _matches;
 
         public DataSeedService()
         {
@@ -13,8 +15,8 @@ namespace DartsStats.Api.Services
             _matches = SeedMatches();
         }
 
-        public List<Player> GetPlayers() => _players;
-        public List<Match> GetMatches() 
+        public List<PlayerDto> GetPlayers() => _players.Select(p => p.ToDto()).ToList();
+        public List<MatchDto> GetMatches() 
         {
             // Populate player objects in matches
             foreach (var match in _matches)
@@ -22,44 +24,44 @@ namespace DartsStats.Api.Services
                 match.Player1 = _players.FirstOrDefault(p => p.Id == match.Player1Id);
                 match.Player2 = _players.FirstOrDefault(p => p.Id == match.Player2Id);
             }
-            return _matches;
+            return _matches.Select(m => m.ToDto()).ToList();
         }
 
-        private List<Player> SeedPlayers()
+        private List<PlayerEntity> SeedPlayers()
         {
-            return new List<Player>
+            return new List<PlayerEntity>
             {
                 // 2025 Premier League Players
-                new Player { Id = 1, Name = "Luke Littler", Nickname = "Cool Hand", Country = "England" },
-                new Player { Id = 2, Name = "Luke Humphries", Nickname = "Bully Boy", Country = "England" },
-                new Player { Id = 3, Name = "Gerwyn Price", Nickname = "The Iceman", Country = "Wales" },
-                new Player { Id = 4, Name = "Nathan Aspinall", Nickname = "The Asp", Country = "England" },
-                new Player { Id = 5, Name = "Michael van Gerwen", Nickname = "Mighty Mike", Country = "Netherlands" },
-                new Player { Id = 6, Name = "Chris Dobey", Nickname = "Hollywood", Country = "England" },
-                new Player { Id = 7, Name = "Rob Cross", Nickname = "Voltage", Country = "England" },
-                new Player { Id = 8, Name = "Stephen Bunting", Nickname = "The Bullet", Country = "England" },
+                new PlayerEntity { Id = 1, Name = "Luke Littler", Nickname = "Cool Hand", Country = "England" },
+                new PlayerEntity { Id = 2, Name = "Luke Humphries", Nickname = "Bully Boy", Country = "England" },
+                new PlayerEntity { Id = 3, Name = "Gerwyn Price", Nickname = "The Iceman", Country = "Wales" },
+                new PlayerEntity { Id = 4, Name = "Nathan Aspinall", Nickname = "The Asp", Country = "England" },
+                new PlayerEntity { Id = 5, Name = "Michael van Gerwen", Nickname = "Mighty Mike", Country = "Netherlands" },
+                new PlayerEntity { Id = 6, Name = "Chris Dobey", Nickname = "Hollywood", Country = "England" },
+                new PlayerEntity { Id = 7, Name = "Rob Cross", Nickname = "Voltage", Country = "England" },
+                new PlayerEntity { Id = 8, Name = "Stephen Bunting", Nickname = "The Bullet", Country = "England" },
 
                 // 2024 Premier League Players (note: some overlap with 2025)
-                new Player { Id = 12, Name = "Luke Humphries", Nickname = "Bully Boy", Country = "England" }, // Same as ID 2, but for 2024
-                new Player { Id = 15, Name = "Michael van Gerwen", Nickname = "Mighty Mike", Country = "Netherlands" }, // Same as ID 5, but for 2024
-                new Player { Id = 13, Name = "Gerwyn Price", Nickname = "The Iceman", Country = "Wales" }, // Same as ID 3, but for 2024
-                new Player { Id = 14, Name = "Nathan Aspinall", Nickname = "The Asp", Country = "England" }, // Same as ID 4, but for 2024
-                new Player { Id = 9, Name = "Michael Smith", Nickname = "Bully Boy", Country = "England" },
-                new Player { Id = 10, Name = "Peter Wright", Nickname = "Snakebite", Country = "Scotland" },
-                new Player { Id = 11, Name = "Jonny Clayton", Nickname = "The Ferret", Country = "Wales" },
-                new Player { Id = 16, Name = "Joe Cullen", Nickname = "Rockstar", Country = "England" }
+                new PlayerEntity { Id = 12, Name = "Luke Humphries", Nickname = "Bully Boy", Country = "England" }, // Same as ID 2, but for 2024
+                new PlayerEntity { Id = 15, Name = "Michael van Gerwen", Nickname = "Mighty Mike", Country = "Netherlands" }, // Same as ID 5, but for 2024
+                new PlayerEntity { Id = 13, Name = "Gerwyn Price", Nickname = "The Iceman", Country = "Wales" }, // Same as ID 3, but for 2024
+                new PlayerEntity { Id = 14, Name = "Nathan Aspinall", Nickname = "The Asp", Country = "England" }, // Same as ID 4, but for 2024
+                new PlayerEntity { Id = 9, Name = "Michael Smith", Nickname = "Bully Boy", Country = "England" },
+                new PlayerEntity { Id = 10, Name = "Peter Wright", Nickname = "Snakebite", Country = "Scotland" },
+                new PlayerEntity { Id = 11, Name = "Jonny Clayton", Nickname = "The Ferret", Country = "Wales" },
+                new PlayerEntity { Id = 16, Name = "Joe Cullen", Nickname = "Rockstar", Country = "England" }
             };
         }
 
-        private List<Match> SeedMatches()
+        private List<MatchEntity> SeedMatches()
         {
-            var matches = new List<Match>();
+            var matches = new List<MatchEntity>();
             var matchId = 1;
 
             // 2024 Premier League Darts - Real Results
             
             // Night 1 - Birmingham (February 1, 2024)
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 15, // Michael van Gerwen (2024 ID)
@@ -77,7 +79,7 @@ namespace DartsStats.Api.Services
                 Round = "Night 1"
             });
 
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 12, // Luke Humphries (2024 ID)
@@ -95,7 +97,7 @@ namespace DartsStats.Api.Services
                 Round = "Night 1"
             });
 
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 13, // Gerwyn Price (2024 ID)
@@ -113,7 +115,7 @@ namespace DartsStats.Api.Services
                 Round = "Night 1"
             });
 
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 14, // Nathan Aspinall (2024 ID)
@@ -132,7 +134,7 @@ namespace DartsStats.Api.Services
             });
 
             // Night 2 - Nottingham (February 8, 2024)
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 12, // Luke Humphries (2024 ID)
@@ -150,7 +152,7 @@ namespace DartsStats.Api.Services
                 Round = "Night 2"
             });
 
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 9, // Michael Smith
@@ -168,7 +170,7 @@ namespace DartsStats.Api.Services
                 Round = "Night 2"
             });
 
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 10, // Peter Wright
@@ -186,7 +188,7 @@ namespace DartsStats.Api.Services
                 Round = "Night 2"
             });
 
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 11, // Jonny Clayton
@@ -207,7 +209,7 @@ namespace DartsStats.Api.Services
             // 2024 Playoffs (May 23, 2024 - O2 Arena, London)
             
             // Semi-Final 1
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 12, // Luke Humphries (2024 ID)
@@ -226,7 +228,7 @@ namespace DartsStats.Api.Services
             });
 
             // Semi-Final 2
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 9, // Michael Smith
@@ -245,7 +247,7 @@ namespace DartsStats.Api.Services
             });
 
             // Final
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 12, // Luke Humphries (2024 ID)
@@ -264,7 +266,7 @@ namespace DartsStats.Api.Services
             });
 
             // Premier League 2025 matches (existing data)
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 1, // Luke Littler
@@ -282,7 +284,7 @@ namespace DartsStats.Api.Services
                 Round = "Semi-Final"
             });
 
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 2, // Luke Humphries
@@ -300,7 +302,7 @@ namespace DartsStats.Api.Services
                 Round = "Semi-Final"
             });
 
-            matches.Add(new Match
+            matches.Add(new MatchEntity
             {
                 Id = matchId++,
                 Player1Id = 2, // Luke Humphries
@@ -344,7 +346,7 @@ namespace DartsStats.Api.Services
                         else player2Score++;
                     }
 
-                    matches.Add(new Match
+                    matches.Add(new MatchEntity
                     {
                         Id = matchId++,
                         Player1Id = player1Id,

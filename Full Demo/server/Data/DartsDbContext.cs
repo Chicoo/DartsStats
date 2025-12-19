@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using DartsStats.Api.Models;
+using DartsStats.Api.Entities;
 
 namespace DartsStats.Api.Data;
 
@@ -9,16 +9,17 @@ public class DartsDbContext : DbContext
     {
     }
 
-    public DbSet<Player> Players { get; set; }
-    public DbSet<Match> Matches { get; set; }
+    public DbSet<PlayerEntity> Players { get; set; }
+    public DbSet<MatchEntity> Matches { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         // Configure Player entity
-        modelBuilder.Entity<Player>(entity =>
+        modelBuilder.Entity<PlayerEntity>(entity =>
         {
+            entity.ToTable("Players");
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
@@ -29,8 +30,9 @@ public class DartsDbContext : DbContext
         });
 
         // Configure Match entity
-        modelBuilder.Entity<Match>(entity =>
+        modelBuilder.Entity<MatchEntity>(entity =>
         {
+            entity.ToTable("Matches");
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.MatchDate).IsRequired();

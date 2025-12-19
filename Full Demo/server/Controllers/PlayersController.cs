@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DartsStats.Api.Models;
+using DartsStats.Api.DTOs;
 using DartsStats.Api.Data;
+using DartsStats.Api.Mappings;
 
 namespace DartsStats.Api.Controllers
 {
@@ -17,20 +18,24 @@ namespace DartsStats.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Player>>> GetPlayers()
+        public async Task<ActionResult<IEnumerable<PlayerDto>>> GetPlayers()
         {
-            return Ok(await _context.Players.OrderBy(p => p.Position).ToListAsync());
+            var players = await _context.Players
+                .OrderBy(p => p.Position)
+                .ToListAsync();
+            
+            return Ok(players.Select(p => p.ToDto()));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Player>> GetPlayer(int id)
+        public async Task<ActionResult<PlayerDto>> GetPlayer(int id)
         {
             var player = await _context.Players.FindAsync(id);
             if (player == null)
             {
                 return NotFound();
             }
-            return Ok(player);
+            return Ok(player.ToDto());
         }
     }
 }

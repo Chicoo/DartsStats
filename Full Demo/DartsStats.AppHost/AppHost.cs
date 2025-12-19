@@ -85,7 +85,7 @@ var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
         // Only show the /scalar URL in the UI
         context.Urls.Add(new ResourceUrlAnnotation()
         {
-            Url = "/scalar",
+            Url = "/scalar/v1",
             DisplayText = "OpenAPI Docs",
             Endpoint = context.GetEndpoint("https")
         });
@@ -107,11 +107,11 @@ var devProxy = builder.AddDevProxyContainer("devproxy")
     .WithUrlsToWatch(() => [$"https://en.wikipedia.org/*"])
     .WithProxy(api);
 
-builder.AddJavaScriptApp("frontend", "../client", "dev")
+builder.AddViteApp("frontend", "../client", "dev")
     .WithReference(api)
     .WaitFor(api)
     .WithEnvironment("VITE_API_BASE_URL", api.GetEndpoint("http"))
-    .WithHttpEndpoint(env: "PORT")
+    //.WithHttpEndpoint(env: "PORT")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile(options =>
     {
