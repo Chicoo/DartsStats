@@ -95,10 +95,7 @@ app.UseCors("AllowFrontend");
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference(options =>
-    {
-        options.EndpointPathPrefix = "/scalar/{documentName}";
-    });
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
