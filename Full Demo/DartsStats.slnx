@@ -1,0 +1,12 @@
+<Solution>
+  <Project Path="server\DartsStats.Api.csproj" Type="Classic C#" />
+  <Project Path="DartsStats.AppHost\DartsStats.AppHost.csproj" Type="Classic C#" />
+  <Project Path="DartsStats.ServiceDefaults\DartsStats.ServiceDefaults.csproj" Type="Classic C#" />
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+</Solution>

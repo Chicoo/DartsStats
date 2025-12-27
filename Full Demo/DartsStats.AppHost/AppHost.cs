@@ -32,6 +32,7 @@ var keycloak = builder.AddKeycloak("keycloak", keycloak_port, keycloak_username,
     .WithDataVolume()
     .WithRealmImport("../data/keycloak")
     .WithExternalHttpEndpoints()
+    .WithOtlpExporter()
     .PublishAsDockerComposeService((resource, service) =>
     {
         service.Command =
