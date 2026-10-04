@@ -33,6 +33,8 @@ export interface VenueInfo {
     website?: string;
     address?: string;
     opened?: string;
+    latitude?: number | null;
+    longitude?: number | null;
     weather?: WeatherInfo;
 }
 

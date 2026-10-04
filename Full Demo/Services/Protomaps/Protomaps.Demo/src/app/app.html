@@ -1,0 +1,61 @@
+<main class="shell">
+  <header class="header">
+    <h1>{{ title() }}</h1>
+    <p>Frontend test client for Protomaps PMTiles hosting, glyphs, and sprites.</p>
+  </header>
+
+  <form class="controls" (submit)="onLoadMap($event)">
+    <label for="pmtiles-url">Base PMTiles HTTP/HTTPS URL</label>
+    <div class="input-row">
+      <input
+        id="pmtiles-url"
+        name="pmtiles-url"
+        [(ngModel)]="pmtilesUrl"
+        [placeholder]="defaultPmtilesUrl"
+        autocomplete="off"
+      />
+      <button type="submit" [disabled]="isLoading()">
+        {{ isLoading() ? 'Loading...' : 'Load map' }}
+      </button>
+    </div>
+  </form>
+
+  <section class="configured-sources" aria-label="Configured sources and assets">
+    <div>
+      <h2>Glyphs</h2>
+      <ul>
+        <li>{{ glyphsUrl }}</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Sprite</h2>
+      <ul>
+        <li>{{ spriteUrl }}</li>
+      </ul>
+    </div>
+    <div>
+      <h2>PMTiles overlays</h2>
+      <ul>
+        @for (overlayUrl of overlayPmtilesUrls; track overlayUrl) {
+          <li>{{ overlayUrl }}</li>
+        }
+      </ul>
+    </div>
+    <div>
+      <h2>GeoJSON overlays</h2>
+      <ul>
+        @for (geoJsonUrl of geoJsonUrls; track geoJsonUrl) {
+          <li>{{ geoJsonUrl }}</li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="status" [class.info]="status().level === 'info'" [class.success]="status().level === 'success'" [class.error]="status().level === 'error'">
+    {{ status().message }}
+  </section>
+
+  <section class="map-panel">
+    <div #mapContainer class="map-canvas"></div>
+  </section>
+</main>

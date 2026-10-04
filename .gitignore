@@ -37,3 +37,6 @@ Thumbs.db
 /.idea
 /.vscode
 /Full Demo/.idea/.idea.DartsStats/.idea
+/Full Demo/.playwright-mcp
+/.playwright-mcp/
+/Full Demo/data/protomaps/

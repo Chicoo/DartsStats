@@ -108,16 +108,40 @@ var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
         ];
     });
 
-builder.AddViteApp("frontend", "../client", "dev")
+var protomapsFilePath = builder.AddParameter("protomaps-file-path",
+    Path.GetFullPath(Path.Combine(builder.AppHostDirectory, "../data/protomaps")));
+
+var protomaps = builder.AddProject<Projects.Protomaps_Host>("protomaps", launchProfileName: "https")
+    .WithEnvironment("Protomaps__FilePath", protomapsFilePath)
+    .WithHttpHealthCheck("/healthz")
+    .WithExternalHttpEndpoints()
+    .WithUrls(context =>
+    {
+        context.Urls.Add(new ResourceUrlAnnotation
+        {
+            Url = "/protomaps/files",
+            DisplayText = "Map Files",
+            Endpoint = context.GetEndpoint("https")
+        });
+    });
+
+protomapsFilePath.WithParentRelationship(protomaps);
+
+builder.AddJavaScriptApp("protomaps-demo", "../Services/Protomaps/Protomaps.Demo", "start")
+    .WithHttpEndpoint(env: "PORT")
+    .WithEnvironment("PROTOMAPS_HTTP", protomaps.GetEndpoint("http"))
+    .WithReference(protomaps)
+    .WaitFor(protomaps)
+    .WithParentRelationship(protomaps)
+    .WithExternalHttpEndpoints();
+
+var frontend = builder.AddViteApp("frontend", "../client", "dev")
+    .WithReference(protomaps)
+    .WithEnvironment("PROTOMAPS_HTTP", protomaps.GetEndpoint("http"))
     .WithReference(api)
     .WaitFor(api)
     .WithEnvironment("VITE_API_BASE_URL", api.GetEndpoint("http"))
     .WithExternalHttpEndpoints()
-    .PublishAsDockerFile(options =>
-    {
-        options.WithDockerfile("./client");
-        options.WithImageTag("latest");
-    })
     .PublishAsDockerComposeService((resource, service) =>
     {
         service.Ports =
@@ -125,5 +149,52 @@ builder.AddViteApp("frontend", "../client", "dev")
             "8000:8000"
         ];
     });
+
+var managementPublicUrl = builder.AddParameter("user-management-public-url", "https://localhost:5178");
+var managementClientSecret = builder.AddParameter("user-management-client-secret",
+    new GenerateParameterDefault { MinLength = 32, Special = false }, secret: true, persist: true);
+var managementAdminSecret = builder.AddParameter("user-management-admin-secret",
+    new GenerateParameterDefault { MinLength = 32, Special = false }, secret: true, persist: true);
+var demoAdminPassword = builder.AddParameter("user-management-demo-admin-password", secret: true);
+
+var managementProvisioning = builder.AddProject<Projects.UserManagement_Host>("user-management-provisioning", launchProfileName: null)
+    .WithArgs("--provision")
+    .WithReference(keycloak)
+    .WaitFor(keycloak)
+    .WithEnvironment("Keycloak__BaseUrl", keycloak.GetEndpoint("http"))
+    .WithEnvironment("Keycloak__PublicUrl", managementPublicUrl)
+    .WithEnvironment("Keycloak__ClientSecret", managementClientSecret)
+    .WithEnvironment("Keycloak__AdminClientSecret", managementAdminSecret)
+    .WithEnvironment("Bootstrap__Username", keycloak_username)
+    .WithEnvironment("Bootstrap__Password", keycloak_password)
+    .WithEnvironment("Bootstrap__SeedAdmin", builder.ExecutionContext.IsRunMode ? "true" : "false")
+    .WithEnvironment("Bootstrap__DemoAdminPassword", demoAdminPassword)
+    .WithParentRelationship(keycloak)
+    .PublishAsDockerFile(container => container.WithArgs("--provision"));
+
+var managementApi = builder.AddProject<Projects.UserManagement_Host>("user-management")
+    .WithReference(keycloak)
+    .WaitForCompletion(managementProvisioning)
+    .WithEnvironment("Keycloak__BaseUrl", keycloak.GetEndpoint("http"))
+    .WithEnvironment("Keycloak__PublicUrl", managementPublicUrl)
+    .WithEnvironment("Keycloak__ClientSecret", managementClientSecret)
+    .WithEnvironment("Keycloak__AdminClientSecret", managementAdminSecret)
+    .WithEnvironment("Keycloak__DartsUrl", frontend.GetEndpoint("http"))
+    .WithHttpHealthCheck("/health")
+    .WithExternalHttpEndpoints()
+    .PublishAsDockerFile(container => container.WithAnnotation(new DockerfileBuildAnnotation(
+        Path.GetFullPath(Path.Combine(builder.AppHostDirectory, "..")),
+        Path.GetFullPath(Path.Combine(builder.AppHostDirectory, "../Services/UserManagement/Dockerfile")), null)));
+
+var managementWeb = builder.AddViteApp("user-management-web", "../Services/UserManagement/UserManagement.Web", "dev")
+    .WithEndpoint("http", endpoint => { endpoint.UriScheme = "https"; endpoint.Port = 5178; })
+    .WithEnvironment("USER_MANAGEMENT_API", managementApi.GetEndpoint("https"))
+    .WithEnvironment("VITE_DARTS_URL", frontend.GetEndpoint("http"))
+    .WaitFor(managementApi)
+    .WithParentRelationship(managementApi)
+    .WithExternalHttpEndpoints()
+    .ExcludeFromManifest();
+
+frontend.WithEnvironment("VITE_USER_MANAGEMENT_URL", managementPublicUrl);
 
 builder.Build().Run();

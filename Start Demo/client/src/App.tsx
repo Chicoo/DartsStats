@@ -20,7 +20,7 @@ function App() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [matches, setMatches] = useState<Match[]>([]);
   const [rounds, setRounds] = useState<string[]>([]);
-  const [selectedSeason, setSelectedSeason] = useState('2025');
+  const [selectedSeason, setSelectedSeason] = useState('2026');
   const [selectedRound, setSelectedRound] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -174,6 +174,7 @@ function App() {
             value={selectedSeason} 
             onChange={(e) => setSelectedSeason(e.target.value)}
           >
+            <option value="2026">2026</option>
             <option value="2025">2025</option>
             <option value="2024">2024</option>
           </select>

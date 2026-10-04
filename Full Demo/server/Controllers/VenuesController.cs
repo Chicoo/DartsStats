@@ -17,7 +17,7 @@ public class VenuesController : ControllerBase
     private static readonly Dictionary<string, (string City, string Venue, DateTime EventDate)> VenueMapping = new()
     {
         { "Night 01", ("Belfast", "SSE Arena, Belfast", new DateTime(2025, 2, 6)) },
-        { "Night 02", ("Glasgow", "P&J Live", new DateTime(2025, 2, 13)) },
+        { "Night 02", ("Glasgow", "OVO Hydro", new DateTime(2025, 2, 13)) },
         { "Night 03", ("Dublin", "3Arena", new DateTime(2025, 2, 20)) },
         { "Night 04", ("Exeter", "Westpoint Arena", new DateTime(2025, 2, 27)) },
         { "Night 05", ("Brighton", "Brighton Centre", new DateTime(2025, 3, 6)) },
@@ -36,6 +36,37 @@ public class VenuesController : ControllerBase
         { "Semi-Final 2", ("London", "The O2 Arena", new DateTime(2025, 5, 29)) },
         { "Final", ("London", "The O2 Arena", new DateTime(2025, 5, 29)) }
     };
+
+    // Arena locations checked against Wikipedia arena pages; independent of enrichment APIs.
+    private static readonly Dictionary<string, (double Latitude, double Longitude)> VenueCoordinates = new()
+    {
+        ["SSE Arena, Belfast"] = (54.60416667, -5.915),
+        ["OVO Hydro"] = (55.8603, -4.2849),
+        ["3Arena"] = (53.3475, -6.22861111),
+        ["Westpoint Arena"] = (50.713135, -3.440506),
+        ["Brighton Centre"] = (50.82111111, -0.14611111),
+        ["Motorpoint Arena Nottingham"] = (52.95277778, -1.13944444),
+        ["Motorpoint Arena Cardiff"] = (51.478943, -3.171737),
+        ["Utilita Arena Newcastle"] = (54.96388889, -1.62333333),
+        ["Uber Arena"] = (52.50555556, 13.44333333),
+        ["AO Arena"] = (53.48805556, -2.24388889),
+        ["Rotterdam Ahoy"] = (51.88277778, 4.48805556),
+        ["M&S Bank Arena"] = (53.39666667, -2.99095833),
+        ["Resorts World Arena"] = (52.45333333, -1.71944444),
+        ["First Direct Arena"] = (53.80305556, -1.54222222),
+        ["P&J Live"] = (57.18527778, -2.19305556),
+        ["Utilita Arena Sheffield"] = (53.4, -1.41888889),
+        ["The O2 Arena"] = (51.5029, 0.0032)
+    };
+
+    private static void ApplyLocation(VenueInfo info, string venue)
+    {
+        if (VenueCoordinates.TryGetValue(venue, out var coordinates))
+        {
+            info.Latitude = coordinates.Latitude;
+            info.Longitude = coordinates.Longitude;
+        }
+    }
 
     public VenuesController(ILogger<VenuesController> logger, HttpClient httpClient, ICacheService cacheService, IConfiguration configuration)
     {
@@ -65,11 +96,13 @@ public class VenuesController : ControllerBase
             if (cachedVenueInfo != null)
             {
                 _logger.LogInformation("Retrieved venue info for {Round} from cache", round);
+                ApplyLocation(cachedVenueInfo, venue);
                 return Ok(cachedVenueInfo);
             }
             
             // If not in cache, fetch from Wikipedia API
             var venueInfo = await FetchVenueInfoFromWikipedia(venue, city, eventDate);
+            ApplyLocation(venueInfo, venue);
             
             // Cache the result
             var cacheExpirationHours = _configuration.GetValue<int>("Cache:VenueExpirationHours", 24);
@@ -415,6 +448,8 @@ public class VenueInfo
     public string? Website { get; set; }
     public string? Address { get; set; }
     public string? Opened { get; set; }
+    public double? Latitude { get; set; }
+    public double? Longitude { get; set; }
     public WeatherInfo? Weather { get; set; }
 }
 
