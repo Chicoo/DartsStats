@@ -1,10 +1,18 @@
 <Solution>
-  <Project Path="server\DartsStats.Api.csproj" Type="Classic C#" />
-  <Project Path="DartsStats.AppHost\DartsStats.AppHost.csproj" Type="Classic C#" />
-  <Project Path="DartsStats.ServiceDefaults\DartsStats.ServiceDefaults.csproj" Type="Classic C#" />
+  <Project Path="server\DartsStats.Api.csproj" Type="C#" />
+  <Folder Name="/Services/Protomaps/">
+    <Project Path="Services/Protomaps/Protomaps.Host/Protomaps.Host.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DartsStats.Api.Tests/DartsStats.Api.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Services/UserManagement/">
+    <Project Path="Services/UserManagement/UserManagement.Host/UserManagement.Host.csproj" />
+    <Project Path="Services/UserManagement/UserManagement.Host.Tests/UserManagement.Host.Tests.csproj" />
+  </Folder>
+  <Project Path="DartsStats.AppHost\DartsStats.AppHost.csproj" Type="C#" />
+  <Project Path="DartsStats.ServiceDefaults\DartsStats.ServiceDefaults.csproj" Type="C#" />
   <Configurations>
-    <BuildType Name="Debug" />
-    <BuildType Name="Release" />
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
     <Platform Name="x86" />

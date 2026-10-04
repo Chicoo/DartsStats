@@ -80,6 +80,9 @@ function RootContent({
             {isAdmin && (
               <Link to="/management" className="nav-link">🔐 Management</Link>
             )}
+            {isAdmin && import.meta.env.VITE_USER_MANAGEMENT_URL && (
+              <a href={import.meta.env.VITE_USER_MANAGEMENT_URL} className="nav-link">Users</a>
+            )}
             <div className="nav-auth">
               {loading ? (
                 <span className="nav-loading">...</span>

@@ -49,8 +49,8 @@ export const fetchRounds = async (season?: string) => {
     return response.json();
 };
 
-export const fetchVenueInfo = async (round: string) => {
-    const response = await fetch(`${API_BASE_URL}/venues/${encodeURIComponent(round)}`);
+export const fetchVenueInfo = async (round: string, signal?: AbortSignal) => {
+    const response = await fetch(`${API_BASE_URL}/venues/${encodeURIComponent(round)}`, { signal });
     if (!response.ok) {
         if (response.status === 404) {
             throw new Error(`No venue information found for ${round}`);
