@@ -1,0 +1,7 @@
+**/bin/
+**/obj/
+**/.vs/
+Protomaps.Demo/node_modules/
+Protomaps.Demo/dist/
+Protomaps.Demo/.angular/
+Protomaps.Demo/coverage/

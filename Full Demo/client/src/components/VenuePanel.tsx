@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import type { VenueInfo } from '../types';
 import { fetchVenueInfo } from '../services/api';
 import './VenuePanel.css';
+import { VenueMap } from './VenueMap';
 
 interface VenuePanelProps {
   readonly selectedRound: string;
@@ -32,23 +33,26 @@ export function VenuePanel({ selectedRound, isVisible, onCollapseChange }: Venue
     setIsCollapsed(false);
     onCollapseChange?.(false);
 
+    const controller = new AbortController();
     const loadVenueInfo = async () => {
       setLoading(true);
       setError(null);
       
       try {
-        const info = await fetchVenueInfo(selectedRound);
-        setVenueInfo(info);
+        const info = await fetchVenueInfo(selectedRound, controller.signal);
+        if (!controller.signal.aborted) setVenueInfo(info);
       } catch (err) {
+        if (controller.signal.aborted) return;
         setError(err instanceof Error ? err.message : 'Failed to load venue information');
         setVenueInfo(null);
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       }
     };
 
     loadVenueInfo();
-  }, [selectedRound, isVisible]);
+    return () => controller.abort();
+  }, [selectedRound, isVisible, onCollapseChange]);
 
   if (!isVisible) {
     return null;
@@ -142,6 +146,8 @@ export function VenuePanel({ selectedRound, isVisible, onCollapseChange }: Venue
               )}
             </div>
             
+            <VenueMap key={selectedRound} venue={venueInfo} isExpanded={!isCollapsed} />
+
             {venueInfo.image && (
               <div className="venue-image">
                 <img 

@@ -41,6 +41,10 @@ namespace DartsStats.Api.Services
                 new PlayerEntity { Id = 7, Name = "Rob Cross", Nickname = "Voltage", Country = "England" },
                 new PlayerEntity { Id = 8, Name = "Stephen Bunting", Nickname = "The Bullet", Country = "England" },
 
+                // 2026 Premier League debutants
+                new PlayerEntity { Id = 17, Name = "Gian van Veen", Nickname = "The Giant", Country = "Netherlands" },
+                new PlayerEntity { Id = 18, Name = "Josh Rock", Nickname = "Rocky", Country = "Northern Ireland" },
+
                 // 2024 Premier League Players (note: some overlap with 2025)
                 new PlayerEntity { Id = 12, Name = "Luke Humphries", Nickname = "Bully Boy", Country = "England" }, // Same as ID 2, but for 2024
                 new PlayerEntity { Id = 15, Name = "Michael van Gerwen", Nickname = "Mighty Mike", Country = "Netherlands" }, // Same as ID 5, but for 2024
@@ -365,6 +369,14 @@ namespace DartsStats.Api.Services
                     });
                 }
             }
+
+            var playerIds = _players.GroupBy(p => p.Name).ToDictionary(g => g.Key, g => g.First().Id);
+            var matches2026 = PremierLeague2026Seed.CreateMatches(playerIds);
+            foreach (var match in matches2026)
+            {
+                match.Id = matchId++;
+            }
+            matches.AddRange(matches2026);
 
             return matches;
         }

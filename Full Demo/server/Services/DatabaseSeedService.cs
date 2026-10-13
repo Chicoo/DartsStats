@@ -15,25 +15,45 @@ public class DatabaseSeedService
 
     public async Task SeedDataAsync()
     {
-        // Only seed if database is empty
-        if (await _context.Players.AnyAsync() || await _context.Matches.AnyAsync())
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+
+        // Preserve the historical seed when initializing a new database.
+        if (!await _context.Players.AnyAsync() && !await _context.Matches.AnyAsync())
         {
-            return;
+            await _context.Players.AddRangeAsync(SeedPlayers());
+            await _context.SaveChangesAsync();
+            var savedPlayers = await _context.Players.ToListAsync();
+            await _context.Matches.AddRangeAsync(SeedMatches(savedPlayers));
+            await _context.SaveChangesAsync();
         }
 
-        // Seed players first (let EF generate IDs)
-        var players = SeedPlayers();
-        await _context.Players.AddRangeAsync(players);
+        // Add the new season to existing databases without resetting user data.
+        var players = await _context.Players.ToListAsync();
+        var participants = SeedPlayers().Where(p => PremierLeague2026PlayerNames.Contains(p.Name));
+        var missingPlayers = participants.Where(p => players.All(existing => existing.Name != p.Name)).ToList();
+        await _context.Players.AddRangeAsync(missingPlayers);
         await _context.SaveChangesAsync();
-        
-        // Now get the saved players with their generated IDs
-        var savedPlayers = await _context.Players.ToListAsync();
-        
-        // Seed matches using the actual player IDs
-        var matches = SeedMatches(savedPlayers);
-        await _context.Matches.AddRangeAsync(matches);
+        players.AddRange(missingPlayers);
+
+        var playerIds = players.ToDictionary(p => p.Name, p => p.Id);
+        var existingMatches = await _context.Matches
+            .Where(m => m.Season == PremierLeague2026Seed.Season)
+            .ToListAsync();
+        var missingMatches = PremierLeague2026Seed.CreateMatches(playerIds).Where(seed =>
+            !existingMatches.Any(existing => existing.MatchDate.Date == seed.MatchDate.Date
+                && existing.Round == seed.Round
+                && ((existing.Player1Id == seed.Player1Id && existing.Player2Id == seed.Player2Id)
+                    || (existing.Player1Id == seed.Player2Id && existing.Player2Id == seed.Player1Id))));
+        await _context.Matches.AddRangeAsync(missingMatches);
         await _context.SaveChangesAsync();
+        await transaction.CommitAsync();
     }
+
+    private static readonly HashSet<string> PremierLeague2026PlayerNames =
+    [
+        "Luke Littler", "Luke Humphries", "Gerwyn Price", "Michael van Gerwen",
+        "Stephen Bunting", "Jonny Clayton", "Gian van Veen", "Josh Rock"
+    ];
 
     private List<PlayerEntity> SeedPlayers()
     {
@@ -53,7 +73,11 @@ public class DatabaseSeedService
             new PlayerEntity { Name = "Michael Smith", Nickname = "Bully Boy", Country = "England", MatchesPlayed = 16, MatchesWon = 11, MatchesLost = 5, LegsWon = 129, LegsLost = 94, PointsFor = 28, PointsAgainst = 0, AvgPoints = 101.4m, AvgLegDarts = 16.2m, CheckoutPercentage = 40.8m, Position = 9 },
             new PlayerEntity { Name = "Jonny Clayton", Nickname = "The Ferret", Country = "Wales", MatchesPlayed = 16, MatchesWon = 9, MatchesLost = 7, LegsWon = 118, LegsLost = 108, PointsFor = 24, PointsAgainst = 0, AvgPoints = 98.1m, AvgLegDarts = 16.8m, CheckoutPercentage = 39.2m, Position = 10 },
             new PlayerEntity { Name = "Peter Wright", Nickname = "Snakebite", Country = "Scotland", MatchesPlayed = 16, MatchesWon = 6, MatchesLost = 10, LegsWon = 98, LegsLost = 125, PointsFor = 18, PointsAgainst = 0, AvgPoints = 94.2m, AvgLegDarts = 17.8m, CheckoutPercentage = 36.4m, Position = 11 },
-            new PlayerEntity { Name = "Joe Cullen", Nickname = "Rockstar", Country = "England", MatchesPlayed = 16, MatchesWon = 5, MatchesLost = 11, LegsWon = 89, LegsLost = 133, PointsFor = 16, PointsAgainst = 0, AvgPoints = 93.1m, AvgLegDarts = 18.2m, CheckoutPercentage = 35.7m, Position = 12 }
+            new PlayerEntity { Name = "Joe Cullen", Nickname = "Rockstar", Country = "England", MatchesPlayed = 16, MatchesWon = 5, MatchesLost = 11, LegsWon = 89, LegsLost = 133, PointsFor = 16, PointsAgainst = 0, AvgPoints = 93.1m, AvgLegDarts = 18.2m, CheckoutPercentage = 35.7m, Position = 12 },
+
+            // 2026 Premier League debutants
+            new PlayerEntity { Name = "Gian van Veen", Nickname = "The Giant", Country = "Netherlands", Position = 13 },
+            new PlayerEntity { Name = "Josh Rock", Nickname = "Rocky", Country = "Northern Ireland", Position = 14 }
         };
     }
 

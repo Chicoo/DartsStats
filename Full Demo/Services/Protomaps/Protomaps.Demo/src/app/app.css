@@ -1,0 +1,134 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+  color: #08243a;
+}
+
+.shell {
+  min-height: 100dvh;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto auto auto auto 1fr;
+  gap: 0.8rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at top right, #e5f4ff, transparent 40%),
+    linear-gradient(180deg, #f7fbff 0%, #edf5fb 100%);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+}
+
+.header p {
+  margin: 0.25rem 0 0;
+}
+
+.controls {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.controls label {
+  font-weight: 600;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+}
+
+input,
+button {
+  border-radius: 8px;
+  border: 1px solid #95adc2;
+  padding: 0.6rem 0.7rem;
+  font: inherit;
+}
+
+button {
+  background: #0b6ba8;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.status {
+  border-radius: 8px;
+  padding: 0.7rem;
+  border: 1px solid transparent;
+  line-height: 1.4;
+  min-height: calc(2 * 1.4em + 1.4rem);
+  max-height: calc(2 * 1.4em + 1.4rem);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.status.info {
+  background: #e7f2ff;
+  border-color: #b8d4f0;
+}
+
+.status.success {
+  background: #e8f6ed;
+  border-color: #b3e2c0;
+}
+
+.status.error {
+  background: #ffeef0;
+  border-color: #f2b7bf;
+}
+
+.map-panel {
+  min-height: 0;
+  height: 100%;
+}
+
+.map-canvas {
+  height: 100%;
+  min-height: 0;
+  border-radius: 10px;
+  border: 1px solid #95adc2;
+  overflow: hidden;
+}
+
+@media (max-width: 720px) {
+  .input-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.configured-sources {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #b8d4f0;
+  background: rgb(255 255 255 / 0.72);
+  padding: 0.7rem;
+}
+
+.configured-sources h2 {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+}
+
+.configured-sources ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.configured-sources li {
+  overflow-wrap: anywhere;
+  font-size: 0.85rem;
+}

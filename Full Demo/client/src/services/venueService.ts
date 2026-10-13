@@ -3,7 +3,7 @@ import type { VenueInfo } from '../types';
 // Mapping of Premier League Darts nights to venue information
 const venueMapping: Record<string, { city: string; venue: string }> = {
   'Night 01': { city: 'Belfast', venue: 'SSE Arena Belfast' },
-  'Night 02': { city: 'Glasgow', venue: 'P&J Live' },
+  'Night 02': { city: 'Glasgow', venue: 'OVO Hydro' },
   'Night 03': { city: 'Dublin', venue: '3Arena' },
   'Night 04': { city: 'Exeter', venue: 'Westpoint Arena' },
   'Night 05': { city: 'Brighton', venue: 'Brighton Centre' },
