@@ -108,8 +108,7 @@ var api = builder.AddProject<Projects.DartsStats_Api>("dartsapi")
         ];
     });
 
-var protomapsFilePath = builder.AddParameter("protomaps-file-path",
-    Path.GetFullPath(Path.Combine(builder.AppHostDirectory, "../data/protomaps")));
+var protomapsFilePath = builder.AddParameter("protomaps-file-path");
 
 var protomaps = builder.AddProject<Projects.Protomaps_Host>("protomaps", launchProfileName: "https")
     .WithEnvironment("Protomaps__FilePath", protomapsFilePath)
